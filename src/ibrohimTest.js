@@ -41,6 +41,7 @@ function IbrohimTest() {
       >
         <FormInput
           required
+          name="username"
           type="text"
           id="username"
           placeholder="Введите ваше имя"
@@ -53,13 +54,13 @@ function IbrohimTest() {
           </span>
         ) : null}
 
-        <FormInput
+        {/* <FormInput
           required
           type="email"
           id="username"
           placeholder="Вxzccz"
           {...formik.getFieldProps('username')}
-        />
+        /> */}
         {/* changes */}
 
         <MButton BType="filter" type="submit">
