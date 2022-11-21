@@ -57,6 +57,7 @@ module.exports = {
         homeColor:'#333',
         homeSortWrap:'#666',
         russuanColor:"#2B3D91",
+        
       },
       lineHeight:{
         lead:'150%',

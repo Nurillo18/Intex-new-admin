@@ -1,74 +1,112 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Assets/main.css'
-import FormInput from './BaseComponents/FormInput/FormInput'
 import MButton from './BaseComponents/MButton/MButton'
 import MFilter from './BaseComponents/MFilter/MFilter'
 import MLabel from './BaseComponents/MLabel/MLabel'
-import { FormikConsumer, useFormik } from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-
-const initialValues = {
-  username: '',
-}
-
-const onSubmit = (values, { resetForm }) => {
-  console.log(values)
-  resetForm({ values: '' })
-}
-
-const validationSchema = Yup.object({
-  username: Yup.string()
-    .required('Username is required, at least 3 characters')
-    .min(3, 'Minimal 3 characters')
-    .max(20, 'Maximum 20 characters'),
-})
+import FormikContainer from './BaseComponents/FormInput/FormikContainer'
+import FormikControl from './BaseComponents/FormInput/FormikControl'
 
 function IbrohimTest() {
-  const formik = useFormik({
-    initialValues,
-    onSubmit,
-    validationSchema,
+  const dropdownOptions = [
+    { key: 'В ожидании', value: '' },
+    { key: 'Option1', value: 'option 1' },
+    { key: 'Option2', value: 'option 2' },
+    { key: 'Option3', value: 'option 3' },
+  ]
+
+  const initialValues = {
+    name: '',
+    password: '',
+    birthDate: null,
+    selectOption: '',
+    price: '',
+    description: ''
+  }
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required('Required'),
+    password: Yup.string().required('Required'),
+    description: Yup.string().required('Required'),
+    selectOption: Yup.string().required('Required'),
+    birthDate: Yup.date().required('Required').nullable(),
+    price: Yup.number().required('Required'),
   })
+
+  const onSubmit = (values, { resetForm }) => {
+    console.log('Form data', values)
+    resetForm()
+  }
 
   return (
     <>
-      <form
-        onSubmit={(e) => {
-          formik.handleSubmit(e)
-          formik.values = initialValues
-        }}
-        className="w-96"
+      {/* <FormikContainer /> */}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
       >
-        <FormInput
-          required
-          type="text"
-          id="username"
-          placeholder="Введите ваше имя"
-          {...formik.getFieldProps('username')}
-        />
+        {(formik) => (
+          <Form className="w-96">
+            <FormikControl
+              control="input"
+              type="name"
+              id="name"
+              label="Имя"
+              name="name"
+              autoComplete="off"
+              placeholder="Введите ваше имя"
+            />
 
-        {formik.touched.username && formik.errors.username ? (
-          <span className="text-red-600 text-xs absolute -bottom-1 sm:bottom-1 left-2">
-            {formik.errors.username}
-          </span>
-        ) : null}
+            <FormikControl
+              control="input"
+              type="password"
+              id="password"
+              label="password"
+              name="password"
+              placeholder="Введите ваше password"
+            />
 
-        <FormInput
-          required
-          type="email"
-          id="username"
-          placeholder="Вxzccz"
-          {...formik.getFieldProps('username')}
-        />
-        {/* changes */}
+            <FormikControl
+              control="input"
+              type="number"
+              id="number"
+              label="Цена со скидкой"
+              name="price"
+              placeholder="2 600 000"
+            />
 
-        <MButton BType="filter" type="submit">
-          Click
-        </MButton>
-      </form>
+            <FormikControl
+              control="date"
+              label="Pick a date"
+              name="birthDate"
+              placeholder="28.09.2022  14:00"
+            />
+
+            <FormikControl
+              control="select"
+              label="Статус"
+              name="selectOption"
+              options={dropdownOptions}
+            />
+
+            <FormikControl
+              control="textarea"
+              label="Description"
+              name="description"
+              placeholder="Введите Описание продукта"
+            />
+
+            <br />
+            <MButton BType="login" type="submit">
+              Войти
+            </MButton>
+          </Form>
+        )}
+      </Formik>
     </>
   )
 }
-
 
 export default IbrohimTest

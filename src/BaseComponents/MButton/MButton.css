@@ -40,9 +40,9 @@
 /* --- --- --- COLOR BASED STYLING --- --- ---  */
 
 .login {
-  min-width: 361px;
+  width:100%;
   height: 48px;
-  background-color: #2b3d90;
+  background-color: #2b3d90 !important;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
   font-weight: 500;
@@ -53,8 +53,9 @@
 
 .login:hover {
   color: #fff;
-  background-color: #182d8b;
-  border-color: #182d8b;
+  background-color: #182d8b !important;
+  border-color: #182d8b !important;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .filter{
@@ -63,8 +64,8 @@
   min-width: 105px;
   border-radius: 8px;
   color: #fff;
-  background-color: #109ef4;
-  border-color: #4d96ff;
+  background-color: #109ef4 !important;
+  border-color: #4d96ff !important;
   font-size: 14px;
   text-align: right;
 }
@@ -84,8 +85,8 @@
 
 .filter:hover {
   color: #fff;
-  background-color: #087bc3;
-  border-color: #087bc3;
+  background-color: #087bc3 !important;
+  border-color: #087bc3 !important;
 }
 
 
@@ -95,7 +96,7 @@
   min-width: 127px;
   border-radius: 6px;
   color: #fff;
-  background-color: #109ef4;
+  background-color: #109ef4 !important;
   border-color: #4d96ff;
   font-size: 14px;
   text-align: right;
@@ -115,14 +116,14 @@
 }
 .add:hover {
   color: #fff;
-  background-color: #058fe4;
-  border-color: #058fe4;
+  background-color: #058fe4 !important;
+  border-color: #058fe4 !important;
 }
 
 .reject {
   min-width: 331px;
   min-height: 48px;
-  background: #f2f2f2;
+  background: #f2f2f2 !important;
   border-radius: 12px;
   font-weight: 500;
   font-size: 18px;
@@ -131,13 +132,13 @@
 }
 
 .reject:hover {
-  background: #e4e4e4;
+  background: #e4e4e4 !important;
 }
 
 .next {
   min-width: 331px;
   min-height: 48px;
-  background: #2b3d90;
+  background: #2b3d90 !important;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
   font-weight: 500;
@@ -147,7 +148,7 @@
 }
 
 .next:hover {
-  background: #0a2395;
+  background: #0a2395 !important;
 }
 
 /* --- --- --- SIZE BASED STYLING --- --- ---  */
