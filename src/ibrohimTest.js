@@ -59,6 +59,9 @@ function IbrohimTest() {
               placeholder="Введите ваше имя"
             />
 
+
+            
+
             <FormikControl
               control="input"
               type="password"
