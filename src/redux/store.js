@@ -1,9 +1,4 @@
-import React from 'react'
+import { configureStore } from '@reduxjs/toolkit'
+import dataReducer from './siteDataReducer'
 
-export default function store() {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+export const store = configureStore({ reducer: { data: dataReducer } })

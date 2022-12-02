@@ -4,6 +4,9 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
+import { useSelector, useDispatch} from "react-redux";
+import { getProducts } from "../../redux/siteDataReducer";
+
 
 const env = process.env.REACT_APP_ALL_API;
 
@@ -16,7 +19,7 @@ const Products = () => {
   const [page, setPage] = React.useState(0);
   const [totalPage, setTotalpage] = React.useState(0);
   const [refresh, setRefresh] = React.useState(false);
-
+  const dispatch = useDispatch()
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -34,6 +37,7 @@ const Products = () => {
         setData(res?.data);
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
+        dispatch(getProducts(res.data))
       });
   }, [limit, page, refresh]);
   // --- Loader
