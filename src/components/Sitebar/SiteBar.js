@@ -154,14 +154,13 @@ export default function SiteBar() {
           <SettingsIcon />
           <span className="ml-navBarIcon">Настройки сайта</span>
         </NavLink>
-        <NavLink
+        <button
           onClick={Logout}
           className={` py-4 opacity-80 flex items-center px-6 text-sm leading-lead font-medium text-navBarColor`}
-          to={"/exit"}
         >
           <ExitICon />
           <span className="ml-navBarIcon">Выйти</span>
-        </NavLink>
+        </button>
       </div>
       <div className="text-sm leading-lead pl-5 pb-5 text-navBarColor w-supportWidth absolute bottom-0">
         <p>

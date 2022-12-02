@@ -11,7 +11,6 @@ import AddProduct from "./Pages/AddProduct/AddProduct";
 import AddCategory from "./Pages/AddCategory/AddCategory";
 import AddAtribut from "./Pages/AddAtribut/AddAtribut";
 import NotFound from "./Pages/NotFound/NotFound";
-import Exit from "./Pages/Exit/Exit";
 import "./Assets/main.css";
 
 export default function Authentication() {
@@ -41,7 +40,6 @@ export default function Authentication() {
             <Route path="/addCategory" element={<AddCategory />} />
             <Route path="/addAtribut" element={<AddAtribut />} />
             <Route path="/addAtribut" element={<AddAtribut />} />
-            <Route path="/exit" element={<Exit />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

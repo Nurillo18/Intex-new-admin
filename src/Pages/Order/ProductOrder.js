@@ -13,6 +13,7 @@ export default function ProductOrder() {
   const [page, setPage] = React.useState(0);
   const [totalPage, setTotalpage] = React.useState(0);
   const [refresh, setRefresh] = React.useState(false);
+  const [deleteAll, setDeleteAll] = React.useState([]);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
 
@@ -40,6 +41,35 @@ export default function ProductOrder() {
         setTotalpage(res.data?.total_count.count);
       });
   }, [limit, page, token, refresh]);
+
+  const IdArray = data.result?.map((res) => res.id);
+
+  const DeleteAll = (e) => {
+    axios
+      .delete(
+        "https://web-production-5638.up.railway.app/api/orders/deleteAll",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            ids: isChecked ? IdArray : deleteAll,
+          },
+        }
+      )
+      .then((res) => {
+        // console.log(res, IdArray);
+        setRefresh(!refresh);
+      })
+      .catch((err) => {
+        console.log(err, IdArray);
+      });
+  };
+  // console.log("with id", deleteAll);
+
+  // console.log(deleteAll.length);
+
   return (
     <>
       <div className="bg-white border-b rounded-xl mb-[100px] z-30">
@@ -49,8 +79,10 @@ export default function ProductOrder() {
             type="checkbox"
             onChange={() => setIsChecked(!isChecked)}
           />
-          <span className="text-[#b9b9b9] mr-3">{checkedCount}, Выбрано</span>
-          <img src={Trash} alt="Trash icon" />
+          <span className="text-[#b9b9b9] mr-3">
+            {isChecked ? data.result.length : deleteAll.length}, Выбрано
+          </span>
+          <img onClick={DeleteAll} src={Trash} alt="Trash icon" />
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full">
@@ -99,6 +131,8 @@ export default function ProductOrder() {
                       refresh={() => setRefresh(!refresh)}
                       key={item.id}
                       isChecked={isChecked}
+                      setDeleteAll={setDeleteAll}
+                      deleteAll={deleteAll}
                       handleChanges={handleChange}
                     ></TableRow2>
                   );

@@ -1,7 +1,9 @@
 import React from "react";
 import MainProduct from "../../Assets/Images/ProductsImgs/main.png";
 
-export default function TableData({ children, image, styles }) {
+export default function TableData({ children, image, styles, productImage }) {
+  const env = process.env.REACT_APP_ALL_API;
+  // console.log(productImage);
   return (
     <td
       className={`flex font-medium leading-6 pl-3 items-center ${

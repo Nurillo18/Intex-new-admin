@@ -88,7 +88,7 @@ export default function TableCat({
             <TableData styles="w-[227px] truncate" image={false}>
               {data.category_ru}
             </TableData>
-            <TableData styles="w-[250px]">{data.category_ru.length}</TableData>
+            <TableData styles="w-[250px]">{data.ru.length}</TableData>
             <TableData styles="min-w-[474px]">
               {categoryResult.map((item, index) => (
                 <MFilter key={index} className="mx-1">

@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 const env = process.env.REACT_APP_ALL_API;
 
 export default function AddAtribut() {
-  const [navBarDrop, setNavBarDrop] = useState(false);
+  const [navBarDrop, setNavBarDrop] = useState(true);
   const [navBarDrop1, setNavBarDrop1] = useState(false);
   const [navBarDrop2, setNavBarDrop2] = useState(false);
   const [info, setInfo] = useState([]);

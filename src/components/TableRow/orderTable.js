@@ -15,6 +15,8 @@ export default function TableRow2({
   data,
   isChecked,
   refresh,
+  deleteAll,
+  setDeleteAll,
 }) {
   const [checker, setChecker] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -23,9 +25,6 @@ export default function TableRow2({
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const DeleteItems = () => {
-    console.log(data.id);
-    console.log(token);
-
     axios
       .delete(
         `https://web-production-5638.up.railway.app/api/orders/delete/${data.id}`,
@@ -36,7 +35,6 @@ export default function TableRow2({
         }
       )
       .then(() => {
-        console.log("deleted");
         refresh();
       })
       .catch((err) => {
@@ -46,11 +44,13 @@ export default function TableRow2({
 
   const handleCheck = (e) => {
     if (e.target.checked) {
-      setChecker(true);
-      e.target.checked = true;
+      setChecker(e.target.checked);
+      setDeleteAll([...deleteAll, data.id]);
     } else {
-      setChecker(false);
-      e.target.checked = false;
+      setChecker(e.target.checked);
+
+      deleteAll = deleteAll.filter((item) => item !== data.id);
+      setDeleteAll(deleteAll);
     }
   };
   const close = (

@@ -1,12 +1,12 @@
-import axios from "axios";
-import React, { useState } from "react";
-import TableData from "../TableData/TableData";
-import MLabel from "../../BaseComponents/MLabel/MLabel";
+import axios from 'axios'
+import React, { useState } from 'react'
+import TableData from '../TableData/TableData'
+import MLabel from '../../BaseComponents/MLabel/MLabel'
 // Images
-import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
-import Trash from "../../Assets/Images/ProductsImgs/trash_1.svg";
+import ThreeDotsSvg from '../../Assets/Images/ProductsImgs/threedots.svg'
+import Trash from '../../Assets/Images/ProductsImgs/trash_1.svg'
 
-const env = process.env.REACT_APP_ALL_API;
+const env = process.env.REACT_APP_ALL_API
 
 export default function TableRow({
   children,
@@ -15,20 +15,20 @@ export default function TableRow({
   isChecked,
   refresh,
 }) {
-  const [checker, setChecker] = useState(false);
-  const [showModal, setshowModal] = useState(false);
+  const [checker, setChecker] = useState(false)
+  const [showModal, setshowModal] = useState(false)
 
-  const token = JSON.parse(window.localStorage.getItem("token"));
+  const token = JSON.parse(window.localStorage.getItem('token'))
 
   const handleCheck = (e) => {
     if (e.target.checked) {
-      setChecker(true);
-      e.target.checked = true;
+      setChecker(true)
+      e.target.checked = true
     } else {
-      setChecker(false);
-      e.target.checked = false;
+      setChecker(false)
+      e.target.checked = false
     }
-  };
+  }
 
   // --- Delete Row
   const DeleteItems = (id) => {
@@ -39,12 +39,12 @@ export default function TableRow({
         },
       })
       .then(() => {
-        refresh();
+        refresh()
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   // --- Colse
   const close = (
@@ -59,7 +59,7 @@ export default function TableRow({
       <line x1="1" y1="15" x2="15" y2="1" stroke="black" strokeWidth="2" />
       <line x1="1" y1="1" x2="15" y2="15" stroke="black" strokeWidth="2" />
     </svg>
-  );
+  )
   return (
     <tr className={`flex items-center border-b ${styles}`}>
       {children ? (
@@ -85,10 +85,18 @@ export default function TableRow({
             />
           </TableData>
           <TableData styles="w-[66px]">{data.id}</TableData>
+
           <TableData
             styles="w-[300px] truncate whitespace-nowrap overflow-hidden text-ellipsis"
-            image={true}
+            image={false}
           >
+            <img
+            className="mr-2"
+              src={`https://web-production-5638.up.railway.app/${data.image[0]}`}
+              alt="Product main"
+              width={42}
+              height={38}
+            />
             {data.name_uz}
           </TableData>
           <TableData styles="w-[153px]">{data.price}</TableData>
@@ -134,5 +142,5 @@ export default function TableRow({
         </>
       )}
     </tr>
-  );
+  )
 }
