@@ -5,6 +5,7 @@ import ContactTable from "../../components/TableRow/ContactTable";
 // --- Images
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
+import { useSelector } from "react-redux";
 
 const env = process.env.REACT_APP_ALL_API;
 
@@ -20,6 +21,20 @@ export default function TableContactRow() {
   const [data, setData] = useState([]);
 
   const token = JSON.parse(window.localStorage.getItem("token"));
+
+  const lang = useSelector((state) => state.data.lang);
+  const search = useSelector((state) => state.data.search);
+
+  function searchProduct(inputValue, data) {
+    let regex = new RegExp(inputValue, "gi");
+    const filterInput = data.filter((product) =>
+      product[`name`]?.match(regex)
+    );
+
+    return filterInput;
+  }
+
+
 
   // --- Check count
   const handleChange = (evt) => {
@@ -41,7 +56,7 @@ export default function TableContactRow() {
         },
       })
       .then((res) => {
-        setData(res?.data);
+        setData(res?.data.result);
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       })
@@ -107,12 +122,25 @@ export default function TableContactRow() {
               </ContactTable>
             </thead>
             <tbody className="bg-white">
-              {data.result?.length && loader ? (
+              {data.length && loader ? (
                 <div className="flex items-center justify-center my-5">
                   {loaders}
                 </div>
-              ) : (
-                data.result?.map((item) => {
+              ) : search.length > 0 ? (
+                searchProduct(search, data).map((item) => {
+                  return (
+                    <ContactTable
+                      styles="py-1.5"
+                      data={item}
+                      key={item.id}
+                      isChecked={isChecked}
+                      handleChanges={handleChange}
+                      refresh={() => setRefresh(!refresh)}
+                    />
+                  );
+                })
+              ): (
+                data.map((item) => {
                   return (
                     <ContactTable
                       styles="py-1.5"

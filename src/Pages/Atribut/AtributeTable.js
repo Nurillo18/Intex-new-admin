@@ -1,46 +1,59 @@
-import React from 'react'
-import ThreeDotsSvg from '../../Assets/Images/ProductsImgs/threedots.svg'
-import TableHeader from '../../components/TableHeader/TableHeader'
-import TableRow from '../../components/TableRow/TableRow'
-import Trash from '../../Assets/Images/ProductsImgs/trash.svg'
-import axios from 'axios'
-import AttributeTable from '../../components/TableRow/AttributeTable'
+import React from "react";
+import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
+import TableHeader from "../../components/TableHeader/TableHeader";
+import TableRow from "../../components/TableRow/TableRow";
+import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
+import axios from "axios";
+import AttributeTable from "../../components/TableRow/AttributeTable";
+import { useSelector } from "react-redux";
 
-const env = process.env.REACT_APP_ALL_API
+const env = process.env.REACT_APP_ALL_API;
 const AtributeProducts = () => {
-  const [loader, setLoader] = React.useState(false)
-  const [refresh, setRefresh] = React.useState(false)
-  const [isChecked, setIsChecked] = React.useState(false)
-  const [checkedCount, setCheckedCount] = React.useState(0)
-  const [totalPage, setTotalpage] = React.useState(0)
-  const [limit, setLimit] = React.useState(5)
-  const [page, setPage] = React.useState(0)
-  const [data, setData] = React.useState([])
+  const [loader, setLoader] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(false);
+  const [checkedCount, setCheckedCount] = React.useState(0);
+  const [totalPage, setTotalpage] = React.useState(0);
+  const [limit, setLimit] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const [data, setData] = React.useState([]);
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
-      setCheckedCount(checkedCount + 1)
+      setCheckedCount(checkedCount + 1);
     } else {
-      setCheckedCount(checkedCount - 1)
+      setCheckedCount(checkedCount - 1);
     }
+  };
+
+  const lang = useSelector((state) => state.data.lang);
+  const search = useSelector((state) => state.data.search);
+
+  function searchProduct(inputValue, data) {
+    let regex = new RegExp(inputValue, "gi");
+    const filterInput = data.filter((product) =>
+      product[`attribute_${lang}`]?.match(regex)
+    );
+
+    return filterInput;
   }
 
   // --- Get Product
   React.useEffect(() => {
-    setLoader(true)
+    setLoader(true);
 
     axios
       .get(`${env}attributes?page=${page}&limit=${limit}`)
       .then((res) => {
-        setData(res?.data)
-        setTotalpage(res.data?.total_count.count)
-        setLoader(false)
+        setData(res?.data.result);
+        setTotalpage(res.data?.total_count.count);
+        setLoader(false);
       })
       .catch((err) => console.error(err))
       .finally(() => {
-        setLoader(false)
-      })
-  }, [limit, page, refresh])
+        setLoader(false);
+      });
+  }, [limit, page, refresh]);
 
   // --- Loader
   const loaders = (
@@ -60,7 +73,7 @@ const AtributeProducts = () => {
         fill="currentFill"
       />
     </svg>
-  )
+  );
 
   return (
     <div className=" bg-white border-b rounded-xl mb-[100px] mt-5">
@@ -100,12 +113,12 @@ const AtributeProducts = () => {
             </TableRow>
           </thead>
           <tbody className="bg-white">
-            {data.result?.length && loader ? (
+            {data.length && loader ? (
               <div className="flex items-center justify-center my-5">
                 {loaders}
               </div>
-            ) : (
-              data.result?.map((item) => {
+            ) : search.length > 0 ? (
+              searchProduct(search, data).map((item) => {
                 return (
                   <AttributeTable
                     styles="py-1.5"
@@ -115,7 +128,20 @@ const AtributeProducts = () => {
                     handleChange={handleChange}
                     refresh={() => setRefresh(!refresh)}
                   ></AttributeTable>
-                )
+                );
+              })
+            ) : (
+              data.map((item) => {
+                return (
+                  <AttributeTable
+                    styles="py-1.5"
+                    data={item}
+                    key={item.id}
+                    isChecked={isChecked}
+                    handleChange={handleChange}
+                    refresh={() => setRefresh(!refresh)}
+                  ></AttributeTable>
+                );
               })
             )}
           </tbody>
@@ -152,7 +178,7 @@ const AtributeProducts = () => {
             <button
               className="mr-4 text-paginationButtonColor"
               onClick={() => {
-                page === 0 ? setPage(0) : setPage(page - 1)
+                page === 0 ? setPage(0) : setPage(page - 1);
               }}
             >
               &#60;
@@ -162,7 +188,7 @@ const AtributeProducts = () => {
               onClick={() => {
                 page === Math.floor(totalPage / limit)
                   ? setPage(Math.floor(totalPage / limit))
-                  : setPage(page + 1)
+                  : setPage(page + 1);
               }}
             >
               &#62;
@@ -171,6 +197,6 @@ const AtributeProducts = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default AtributeProducts
+  );
+};
+export default AtributeProducts;

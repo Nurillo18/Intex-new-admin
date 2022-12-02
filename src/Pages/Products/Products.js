@@ -4,7 +4,8 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableRow from "../../components/TableRow/TableRow";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
+import { searchProduction } from "../../redux/siteDataReducer";
 const env = process.env.REACT_APP_ALL_API;
 
 const Products = () => {
@@ -17,6 +18,9 @@ const Products = () => {
   const [totalPage, setTotalpage] = React.useState(0);
   const [refresh, setRefresh] = React.useState(false);
 
+  const search = useSelector(state => state.data.search)
+  const lang  = useSelector(state => state.data.lang)
+
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -25,13 +29,24 @@ const Products = () => {
     }
   };
 
+  function searchProduct(inputValue, data) {
+    let regex = new RegExp(inputValue, "gi");
+    const filterInput = data.filter((product) =>
+      product[`name_${lang}`]?.match(regex)
+    );
+
+    return filterInput;
+  }
+
+  console.log(searchProduct(search, data));
+
   // --- Get Product
   React.useEffect(() => {
     setLoader(true);
     axios
       .get(`${env}products/getAll?page=${page}&limit=${limit}`)
       .then((res) => {
-        setData(res?.data);
+        setData(res?.data.result);
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       });
@@ -100,20 +115,38 @@ const Products = () => {
               <div className="flex items-center justify-center my-5">
                 {loaders}
               </div>
+            ) : search.length > 0 ? (
+              (
+                searchProduct(search, data).map((item) => {
+                  return (
+                    <TableRow
+                      styles="py-1.5"
+                      data={item}
+                      key={item.id}
+                      isChecked={isChecked}
+                      refresh={() => setRefresh(!refresh)}
+                      handleChange={handleChange}
+                    ></TableRow>
+                  );
+                })
+              )
             ) : (
-              data.result?.map((item) => {
-                return (
-                  <TableRow
-                    styles="py-1.5"
-                    data={item}
-                    key={item.id}
-                    isChecked={isChecked}
-                    refresh={() => setRefresh(!refresh)}
-                    handleChange={handleChange}
-                  ></TableRow>
-                );
-              })
-            )}
+              (
+                data.map((item) => {
+                  return (
+                    <TableRow
+                      styles="py-1.5"
+                      data={item}
+                      key={item.id}
+                      isChecked={isChecked}
+                      refresh={() => setRefresh(!refresh)}
+                      handleChange={handleChange}
+                    ></TableRow>
+                  );
+                })
+              )
+            )
+            }
           </tbody>
         </table>
       </div>
