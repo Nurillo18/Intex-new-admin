@@ -44,7 +44,7 @@ export default function TBody({ vitalData }) {
               </td>
               {el.map((a, i) => {
                 return (
-                  <td className={`py-3 pl-3 ${a.style}`} key={i}>
+                  <td className={`py-3 pl-3 truncate ${a.style}`} key={i}>
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"

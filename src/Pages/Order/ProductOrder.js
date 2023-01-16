@@ -145,22 +145,25 @@ export default function ProductOrder() {
       },
       {
         title: item.address,
-        style: "w-[200px]",
+        style: "w-[200px] underline underline-offset-4 text-blue-400",
       },
       {
         title: item.total_count,
-        style: "w-[110px]",
+        style: "w-[110px] pl-3",
       },
       {
         title: item.total_price == null ? "0" : item.total_price,
         style: "w-[132px]",
       },
       {
-        title: item.created_at === null ? "" : item.created_at,
+        title: `${item.created_at.slice(0, 10)}  ${item.created_at.slice(
+          11,
+          16
+        )}`,
         style: "w-[114px]",
       },
       {
-        title: item.name_ru,
+        title: item.name_en,
         style: "w-[118px]",
       },
     ];
