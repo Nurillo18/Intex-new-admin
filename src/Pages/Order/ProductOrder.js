@@ -84,8 +84,24 @@ export default function ProductOrder() {
         console.log(err, IdArray);
       });
   };
-  // console.log("with id", deleteAll);
-
+  // console.log("with id", deleteAll);  https://intex-shop-production.up.railway.app/api/orders/3
+  const DeleteItem = () => {
+    axios
+      .delete(
+        `https://intex-shop-production.up.railway.app/api/orders/${data.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        console.log("deleted");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const datas = [
     {
       title: "№ Заказа",
@@ -192,7 +208,7 @@ export default function ProductOrder() {
           <table className="w-full">
             <THead data={datas} />
 
-            <TBody vitalData={vitalData} />
+            <TBody vitalData={vitalData} DeleteItem={DeleteItem} />
           </table>
         </div>
         <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">

@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
 
-export default function TBody({ vitalData }) {
+export default function TBody({ vitalData, DeleteItem }) {
   const modalRef = useRef(null);
   const [bnnma, setBnnma] = useState(false);
   const handleModal = (e, i) => {
@@ -86,7 +86,10 @@ export default function TBody({ vitalData }) {
                     <img src={Edit} alt="" width={16} height={17} />
                     Изменить
                   </button>
-                  <button className="flex items-center text-xs">
+                  <button
+                    className="flex items-center text-xs"
+                    onClick={DeleteItem}
+                  >
                     <img src={Delete} alt="" width={16} height={17} />
                     Удалить
                   </button>
