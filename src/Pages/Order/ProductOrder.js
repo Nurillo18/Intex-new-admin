@@ -5,6 +5,8 @@ import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import TableRow2 from "../../components/TableRow/orderTable";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import THead from "../../components/THead/THead";
+import TBody from "../../components/TBody/TBody";
 
 export default function ProductOrder() {
   const [data, setData] = React.useState([]);
@@ -84,47 +86,82 @@ export default function ProductOrder() {
   };
   // console.log("with id", deleteAll);
 
-  // console.log(deleteAll.length);
   const datas = [
     {
-      title: "ID",
+      title: "№ Заказа",
       image: true,
-      style: "w-20 justify-center",
+      style: "w-[120px] justify-center",
     },
     {
-      title: "Категория продукта",
+      title: "Имя клиента",
       image: true,
-      style: "w-[227px] ",
+      style: "w-[132px] ",
     },
     {
-      title: "Кол-во под категория",
-      image: true,
-      style: "w-[197px]",
+      title: "Tелефон",
+      image: false,
+      style: "w-[110px]",
     },
     {
-      title: "Под категории",
+      title: "Адрес",
+      image: false,
+      style: "w-[200px]",
+    },
+    {
+      title: "Товары",
       image: true,
-      style: "w-[474px]",
+      style: "w-[110px]",
+    },
+    {
+      title: "Обшая цена",
+      image: true,
+      style: "w-[132px]",
+    },
+    {
+      title: "Время заказа",
+      image: false,
+      style: "w-[114px]",
+    },
+    {
+      title: "Статус",
+      image: false,
+      style: "w-[118px]",
     },
   ];
   console.log(data);
   const vitalData = data.map((item) => {
     return [
       {
-        title: item.id,
-        style: "w-20 ",
+        title: item.order_number,
+        style: "w-[120px] ",
       },
       {
-        title: item.category_ru,
-        style: "w-[227px] flex pl-3 items-center",
+        title: item.first_name,
+        style: "w-[132px]",
       },
       {
-        title: item.ru[0] == null ? "0" : item.ru.length,
-        style: "w-[197px]",
+        title: item.phone,
+        style: "w-[110px]",
       },
       {
-        title: item.ru[0] === null ? "" : item.ru,
-        style: "w-[474px]",
+        title: item.address,
+        style: "w-[200px]",
+      },
+      {
+        title: item.total_count,
+        style: "w-[110px]",
+      },
+      {
+        title: item.total_price == null ? "0" : item.total_price,
+        style: "w-[132px]",
+      },
+      {
+        title: item.created_at === null ? "" : item.created_at,
+        style: "w-[114px]",
+      },
+      {
+        title: item.name_ru,
+        style: "w-[118px]",
       },
     ];
   });
@@ -150,8 +187,9 @@ export default function ProductOrder() {
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full">
-            <thead className="bg-[#f2f2f2]"></thead>
-            <tbody className="bg-white"></tbody>
+            <THead data={datas} />
+
+            <TBody vitalData={vitalData} />
           </table>
         </div>
         <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
