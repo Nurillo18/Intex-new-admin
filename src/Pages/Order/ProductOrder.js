@@ -21,7 +21,7 @@ export default function ProductOrder() {
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const lang = useSelector((state) => state.data.lang);
-  const search = useSelector(state => state.data.search)
+  const search = useSelector((state) => state.data.search);
 
   function searchProduct(inputValue, data) {
     let regex = new RegExp(inputValue, "gi");
@@ -32,7 +32,6 @@ export default function ProductOrder() {
     return filterInput;
   }
 
-
   const handleChange = (evt) => {
     if (evt.target.checked) {
       setCheckedCount(checkedCount + 1);
@@ -40,11 +39,12 @@ export default function ProductOrder() {
       setCheckedCount(checkedCount - 1);
     }
   };
+  //intex-shop-production.up.railway.app/api/orders?page=0&limit=10
 
-  React.useEffect(() => {
+  https: React.useEffect(() => {
     axios
       .get(
-        `https://web-production-5638.up.railway.app/api/orders?page=${page}&limit=${limit}`,
+        `https://intex-shop-production.up.railway.app/api/orders?page=${page}&limit=${limit}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -85,7 +85,49 @@ export default function ProductOrder() {
   // console.log("with id", deleteAll);
 
   // console.log(deleteAll.length);
-
+  const datas = [
+    {
+      title: "ID",
+      image: true,
+      style: "w-20 justify-center",
+    },
+    {
+      title: "Категория продукта",
+      image: true,
+      style: "w-[227px] ",
+    },
+    {
+      title: "Кол-во под категория",
+      image: true,
+      style: "w-[197px]",
+    },
+    {
+      title: "Под категории",
+      image: true,
+      style: "w-[474px]",
+    },
+  ];
+  console.log(data);
+  const vitalData = data.map((item) => {
+    return [
+      {
+        title: item.id,
+        style: "w-20 ",
+      },
+      {
+        title: item.category_ru,
+        style: "w-[227px] flex pl-3 items-center",
+      },
+      {
+        title: item.ru[0] == null ? "0" : item.ru.length,
+        style: "w-[197px]",
+      },
+      {
+        title: item.ru[0] === null ? "" : item.ru,
+        style: "w-[474px]",
+      },
+    ];
+  });
 
   return (
     <>
@@ -108,74 +150,8 @@ export default function ProductOrder() {
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full">
-            <thead className="bg-[#f2f2f2]">
-              <TableRow2 styles="py-[13px]">
-                <TableHeader styles="w-11 pr-3 justify-center">
-                  <input
-                    className="w-4 h-4"
-                    type="checkbox"
-                    readOnly
-                    checked={false}
-                  />
-                </TableHeader>
-                <TableHeader styles="w-[80px]" sortIcon={true}>
-                  ID
-                </TableHeader>
-                <TableHeader styles="w-[148px]" sortIcon={true}>
-                  Номер заказа
-                </TableHeader>
-                <TableHeader styles="w-[148px]" sortIcon={true}>
-                  Имя клиента
-                </TableHeader>
-                <TableHeader styles="w-[178px]" sortIcon={true}>
-                  Номер телефона
-                </TableHeader>
-                <TableHeader styles="w-[254px]">Адрес</TableHeader>
-                <TableHeader styles="w-[178px]">Кол-во продуктов</TableHeader>
-                <TableHeader styles="w-[153px]">Обшая цена</TableHeader>
-                <TableHeader styles="w-[153px]">Цена со скидкой</TableHeader>
-                <TableHeader styles="w-[145px]">Время заказа</TableHeader>
-                <TableHeader styles="w-[145px]">Статус</TableHeader>
-                <TableHeader styles="w-[95px] pr-3 justify-center">
-                  <button>
-                    <img src={ThreeDotsSvg} alt="three dots icon" />
-                  </button>
-                </TableHeader>
-              </TableRow2>
-            </thead>
-            <tbody className="bg-white">
-              {data.length && search.length ? (
-                searchProduct(search, data).map((item) => {
-                  return (
-                    <TableRow2
-                      styles="py-1.5"
-                      data={item}
-                      refresh={() => setRefresh(!refresh)}
-                      key={item.id}
-                      isChecked={isChecked}
-                      setDeleteAll={setDeleteAll}
-                      deleteAll={deleteAll}
-                      handleChanges={handleChange}
-                    ></TableRow2>
-                  );
-                })
-              ) : (
-                data.map((item) => {
-                  return (
-                    <TableRow2
-                      styles="py-1.5"
-                      data={item}
-                      refresh={() => setRefresh(!refresh)}
-                      key={item.id}
-                      isChecked={isChecked}
-                      setDeleteAll={setDeleteAll}
-                      deleteAll={deleteAll}
-                      handleChanges={handleChange}
-                    ></TableRow2>
-                  );
-                })
-              )}
-            </tbody>
+            <thead className="bg-[#f2f2f2]"></thead>
+            <tbody className="bg-white"></tbody>
           </table>
         </div>
         <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
