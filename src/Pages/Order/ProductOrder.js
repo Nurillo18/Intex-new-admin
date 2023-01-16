@@ -86,9 +86,10 @@ export default function ProductOrder() {
   };
   // console.log("with id", deleteAll);  https://intex-shop-production.up.railway.app/api/orders/3
   const DeleteItem = () => {
+    console.log(token);
     axios
       .delete(
-        `https://intex-shop-production.up.railway.app/api/orders/${data.id}`,
+        `https://intex-shop-production.up.railway.app/api/orders/${data.user_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
