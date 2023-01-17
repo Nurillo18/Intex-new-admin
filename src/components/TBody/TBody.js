@@ -18,7 +18,7 @@ export default function TBody({ vitalData }) {
             <tr
               className="flex items-center border-t last:border-b"
               key={i}
-              onClick={(e) => handleModal(e, i)}
+              // onClick={(e) => handleModal(e, i)}
             >
               <td className="w-11 flex justify-center">
                 <input
@@ -29,7 +29,7 @@ export default function TBody({ vitalData }) {
               </td>
               {el.map((a, i) => {
                 return (
-                  <td className={`py-3 pl-3 ${a.style}`} key={i}>
+                  <td className={`py-3 pl-3 truncate ${a.style}`} key={i}>
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"

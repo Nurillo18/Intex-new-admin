@@ -122,7 +122,7 @@ export default function ProductOrder() {
     {
       title: "Адрес",
       image: false,
-      style: "w-[200px]",
+      style: "w-[200px] ",
     },
     {
       title: "Товары",
@@ -182,6 +182,7 @@ export default function ProductOrder() {
       {
         title: item.name_en ? item.name_en : "Null",
         style: "w-[118px] flex justify-center",
+        label: `label label_${item.status_en}`,
       },
     ];
   });
