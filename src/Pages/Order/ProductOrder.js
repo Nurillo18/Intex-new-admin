@@ -117,7 +117,7 @@ export default function ProductOrder() {
     {
       title: "Tелефон",
       image: false,
-      style: "w-[110px]",
+      style: "w-[162px]",
     },
     {
       title: "Адрес",
@@ -158,7 +158,7 @@ export default function ProductOrder() {
       },
       {
         title: item.phone,
-        style: "w-[110px]",
+        style: "w-[162px]",
       },
       {
         title: item.address,
@@ -169,7 +169,7 @@ export default function ProductOrder() {
         style: "w-[110px] pl-3",
       },
       {
-        title: item.total_price == null ? "0" : item.total_price,
+        title: `${item.total_price} сум`,
         style: "w-[132px]",
       },
       {
@@ -180,8 +180,8 @@ export default function ProductOrder() {
         style: "w-[114px]",
       },
       {
-        title: item.name_en,
-        style: "w-[118px]",
+        title: item.name_en ? item.name_en : "Null",
+        style: "w-[118px] flex justify-center",
       },
     ];
   });
