@@ -1,22 +1,107 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import AtributeProducts from "./AtributeTable";
-import MButton from "../../BaseComponents/MButton/MButton";
+import React from 'react'
+import THead from '../../components/THead/THead'
+import TBody from '../../components/TBody/TBody'
+import { Link } from 'react-router-dom'
+import AtributeProducts from './AtributeTable'
+import MButton from '../../BaseComponents/MButton/MButton'
 // Styles
-import "../../BaseComponents/MButton/MButton.css";
+import '../../BaseComponents/MButton/MButton.css'
 // Images
-import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
-import { useSelector, useDispatch } from "react-redux";
-import { searchProduction } from "../../redux/siteDataReducer";
+import HomeImg from '../../Assets/Images/HeaderImgs/HomeImg.svg'
+import { useSelector, useDispatch } from 'react-redux'
+import { searchProduction } from '../../redux/siteDataReducer'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import axios from 'axios'
+
+const data = [
+  {
+    title: 'ID',
+    image: false,
+    style: 'w-[80px] justify-center',
+  },
+  {
+    title: 'Название товара',
+    image: false,
+    style: 'w-[300px] ',
+  },
+  {
+    title: 'Вид формы',
+    image: false,
+    style: 'w-[190px]',
+  },
+  {
+    title: 'Значение атрибута',
+    image: false,
+    style: 'w-[480px]',
+  },
+]
 
 export default function Home() {
-  const search = useSelector((state) => state.data.search);
- 
-  const dispatch = useDispatch();
+  const search = useSelector((state) => state.data.search)
+  const [products, setProducts] = useState([])
+  const [limit, setLimit] = React.useState(5)
+  const [totalPage, setTotalpage] = React.useState(0)
+  const [atr, setAtr] = React.useState([])
+  const [page, setPage] = React.useState(0)
+
+  const dispatch = useDispatch()
+
+  // ----------------------------------------
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://intex-shop-production.up.railway.app/api/attributes?page=0&limit=10',
+      )
+      .then((res) => {
+        setAtr(res?.data.result)
+      })
+      .catch((err) => console.error(err))
+      .finally(() => {})
+  }, [limit, page])
+
+  const vitalData = atr.map((item) => {
+    return [
+      {
+        title: item.id,
+        style: 'w-[80px] flex justify-center',
+      },
+      {
+        title: item.attribute_en,
+        style: 'w-[300px] flex pl-3 items-center',
+      },
+      {
+        title: item.view,
+        style: 'w-[190px] flex pl-3 items-center',
+      },
+      {
+        title: item.en,
+        style: 'w-[480px] flex pl-3 items-center',
+      },
+    ]
+  })
+
+  const handleChange = (e) => {
+    const { name, checked } = e.target
+
+    if (name === 'allSelect') {
+      let tempUser = vitalData.map((user) => {
+        return { ...user, isChecked: checked }
+      })
+      setProducts(tempUser)
+    } else {
+      let tempUser = vitalData.map((user) =>
+        user.username === name ? { ...user, isChecked: checked } : user,
+      )
+
+      setProducts(tempUser)
+    }
+  }
   return (
     <div>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
-        <Link className="flex items-center" to={"/"}>
+        <Link className="flex items-center" to={'/'}>
           <img src={HomeImg} alt="Home Img" width="16" height="16" />
         </Link>
         <span className="ml-2.5 text-navSubColor ">/</span>
@@ -26,8 +111,8 @@ export default function Home() {
           </h2>
         </Link>
       </div>
-      <div className="pt-6 pb-8 px-homeContentPadding h-[100vh] overflow-auto">
-        <div>
+      <div className="pt-6 pb-8 px-homeContentPadding h-[100vh] ">
+        <div className=" mb-4">
           <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">
             Атрибуты
           </h2>
@@ -78,8 +163,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <AtributeProducts />
+        {/* <AtributeProducts /> */}
+        <table className="w-full">
+          <THead data={data}></THead>
+          <TBody vitalData={vitalData}></TBody>
+        </table>
       </div>
     </div>
-  );
+  )
 }

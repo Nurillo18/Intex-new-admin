@@ -7,11 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { searchProduction } from "../../redux/siteDataReducer";
 // import moment from 'moment';
 export default function Home() {
-  
   const search = useSelector((state) => state.data.search);
- 
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
 
   return (
     <div className="">

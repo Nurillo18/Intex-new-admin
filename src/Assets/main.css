@@ -66,6 +66,28 @@ body{
   background: #E5E5E5;
   overflow: hidden; 
 }
+
+/* --- Scrol Styles --- */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #F2F2F2; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #FF7D44; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
 .active{
   opacity: 1;
   position: relative;
@@ -171,4 +193,23 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button{
   -webkit-appearance: none;
   margin: 0;
+}
+
+.date_bg {
+  background-image: url("../Assets/Images/UserImgs/date.svg");
+  background-repeat: no-repeat;
+  background-position: 320px 10px;
+}
+
+.date[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
 }

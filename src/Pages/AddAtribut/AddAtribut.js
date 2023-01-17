@@ -81,7 +81,7 @@ export default function AddAtribut() {
     }
 
     axios
-      .post(`${env}attributes/add`, arr, {
+      .post(`${env}attributes`, arr, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import ThreeDotsSvg from "../../Assets/Images/ProductsImgs/threedots.svg";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableCat from "../../components/TableRow/CategoryTable";
+import THead from "../../components/THead/THead";
 import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import TBody from "../../components/TBody/TBody";
 
 const env = process.env.REACT_APP_ALL_API;
 const token = JSON.parse(window.localStorage.getItem("token"));
@@ -96,6 +98,51 @@ const ProductsCategory = () => {
         console.log(err, IdArray);
       });
   };
+
+  const datas = [
+    {
+      title: "ID",
+      image: true,
+      style: "w-20 justify-center",
+    },
+    {
+      title: "Категория продукта",
+      image: true,
+      style: "w-[227px] ",
+    },
+    {
+      title: "Кол-во под категория",
+      image: true,
+      style: "w-[197px]",
+    },
+    {
+      title: "Под категории",
+      image: true,
+      style: "w-[474px]",
+    },
+  ];
+  console.log(data);
+  const vitalData = data.map((item) => {
+    return [
+      {
+        title: item.id,
+        style: "w-20 ",
+      },
+      {
+        title: item.category_ru,
+        style: "w-[227px] flex pl-3 items-center",
+      },
+      {
+        title: item.ru[0] == null ? "0" : item.ru.length,
+        style: "w-[197px]",
+      },
+      {
+        title: item.ru[0] === null ? "" : item.ru,
+        style: "w-[474px]",
+      },
+    ];
+  });
+
   return (
     <div className="bg-white border-b rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center">
@@ -117,63 +164,10 @@ const ProductsCategory = () => {
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
           <thead className="bg-[#f2f2f2]">
-            <TableCat styles="py-[13px]">
-              <TableHeader styles="w-11 pr-3 justify-center">
-                <input className="" type="checkbox" readOnly checked={false} />
-              </TableHeader>
-              <TableHeader styles="w-[80px]" sortIcon={true}>
-                ID
-              </TableHeader>
-              <TableHeader styles="w-[227px]" sortIcon={true}>
-                {languages[lang].main.productName}
-              </TableHeader>
-              <TableHeader styles="w-[250px]" sortIcon={true}>
-                {languages[lang].main.colvo}
-              </TableHeader>
-              <TableHeader styles="min-w-[474px] " sortIcon={true}>
-                {languages[lang].main.subCat}
-              </TableHeader>
-              <TableHeader styles="w-[95px] pr-3 justify-center">
-                <button>
-                  <img src={ThreeDotsSvg} alt="three dots icon" />
-                </button>
-              </TableHeader>
-            </TableCat>
+            <THead data={datas} />
           </thead>
           <tbody className="bg-white">
-            {data.length && loader ? (
-              <div className="flex items-center justify-center my-5">
-                {loaders}
-              </div>
-            ) : search.length > 0 ? (
-              data.map((item) => {
-                return (
-                  <TableCat
-                    styles="py-1.5"
-                    data={item}
-                    key={item.id}
-                    isChecked={isChecked}
-                    handleChange={handleChange}
-                    refresh={() => setRefresh(!refresh)}
-                  ></TableCat>
-                );
-              })
-            ) : (
-              data.map((item) => {
-                return (
-                  <TableCat
-                    styles="py-1.5"
-                    data={item}
-                    key={item.id}
-                    isChecked={isChecked}
-                    setDeleteAll={setDeleteAll}
-                    deleteAll={deleteAll}
-                    handleChange={handleChange}
-                    refresh={() => setRefresh(!refresh)}
-                  ></TableCat>
-                );
-              })
-            )}
+            <TBody vitalData={vitalData} />
           </tbody>
         </table>
       </div>

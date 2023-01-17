@@ -1,17 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import languages from "./localization.js";
-
-
-
-
 const siteProducts = createSlice({
   name: "products",
   initialState: {
     localization: languages,
     lang: "ru",
 
-    search: '',
-
+    search: "",
   },
   reducers: {
     changeLang: (state, action) => {
@@ -19,13 +14,10 @@ const siteProducts = createSlice({
     },
 
     searchProduction: (state, action) => {
-      state.search = action.payload
-    }
-
+      state.search = action.payload;
+    },
   },
 });
-
-
 
 export const { changeLang, searchProduction } = siteProducts.actions;
 

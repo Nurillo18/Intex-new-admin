@@ -14,6 +14,8 @@ import THead from "../../components/THead/THead";
 import TBody from "../../components/TBody/TBody";
 import { useEffect } from "react";
 
+const env = process.env.REACT_APP_ALL_API;
+
 const data = [
   {
     title: "ID",
@@ -55,23 +57,31 @@ const data = [
 function UserPage() {
   const [getImg, setGetImg] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  // ------> Input States
   const [icon, setIcon] = useState(false);
   const [password, setPassword] = useState("");
   const [icon1, setIcon1] = useState(false);
   const [password1, setPassword1] = useState("");
-
+  // ------> Data
   const [products, setProducts] = useState([]);
+  // ------> User Informations States
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [status, setStatus] = useState("");
+  const [surName, setSurName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [birthday, setBirthday] = useState("");
 
-  console.log(products);
-
+  // ------> Get Products
   useEffect(() => {
-    fetch("https://intex-shop-production.up.railway.app/api/products?page=0&limit=10")
+    fetch(`${env}products?page=0&limit=10`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data?.result);
       });
   }, []);
 
+  // ------> Table Row Information
   const vitalData = products.map((item) => {
     return [
       {
@@ -97,7 +107,7 @@ function UserPage() {
         style: "w-[188px] pl-3",
       },
       {
-        title: "+998 90 123 45 67",
+        title: "28.09.2022 14:00",
         style: "w-[162px]",
       },
       {
@@ -107,6 +117,7 @@ function UserPage() {
     ];
   });
 
+  // ------> Upload Img
   const uploadImg = (evt) => {
     console.log(evt.target.files[0]);
     setGetImg([
@@ -114,6 +125,29 @@ function UserPage() {
         img: window.URL.createObjectURL(evt.target.files[0]),
       },
     ]);
+  };
+
+  const userDeteals = {
+    name: name,
+    surName: surName,
+    image: getImg,
+    first_name: name,
+    last_name: surName,
+    password: password === password1 ? password : "",
+    phone: "+998" + phoneNumber,
+    email: "example@gmail.com",
+    address: "string",
+    birth_date: birthday,
+    user_image: getImg,
+    status: status,
+    gender: "male",
+    role: role,
+  };
+
+  const userCreate = (e) => {
+    e.preventDefault();
+
+    console.log(userDeteals);
   };
 
   return (
@@ -219,7 +253,7 @@ function UserPage() {
                 <label htmlFor="selectImg" className="inline-block">
                   <div className="flex justify-center items-center w-[200px] h-[44px] rounded-[8px] bg-bgUpload1 cursor-pointer">
                     <img className="w-5 h-5" src={UploadImg} alt="" />
-                    <p className="ml-3 text-sm text-blue-uploadTextColor">Загрузить фото</p>
+                    <p className="ml-3 text-sm text-[#377DFF]">Загрузить фото</p>
                   </div>
                   <input
                     onChange={uploadImg}
@@ -231,14 +265,16 @@ function UserPage() {
               </div>
             </div>
           </div>
-          <form className="mt-8" autoComplete="off">
+          <form onSubmit={userCreate} className="mt-8" autoComplete="off">
             <div className="grid grid-cols-2 gap-5">
               <label className="flex flex-col font-medium text-base text-addProductColor">
                 Имя
                 <input
+                  required
                   type="text"
                   name="name"
                   placeholder="Введите ваше имя"
+                  onChange={(e) => setName(e.target.value)}
                   className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-4"
                 />
               </label>
@@ -246,9 +282,11 @@ function UserPage() {
               <label className="flex flex-col font-medium text-base text-addProductColor">
                 Фамилия
                 <input
+                  required
                   type="text"
                   name="surname"
                   placeholder="Введите ваша фамилия"
+                  onChange={(e) => setSurName(e.target.value)}
                   className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-4"
                 />
               </label>
@@ -259,9 +297,10 @@ function UserPage() {
                   <img src={Flag} className="w-6 h-4" width={22} height={15} alt="site_logo" />
                   <p className="ml-1 text-base text-[#0E0F0F]">+998</p>
                   <input
+                    required
                     type="number"
-                    maxlength="9"
                     placeholder="901234567"
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="font-normal outline-none w-full ml-1 h-full p-2"
                   />
                 </div>
@@ -270,34 +309,37 @@ function UserPage() {
               <label className="text-15 relative flex flex-col text-addProductColor" htmlFor="date">
                 Дата рождение
                 <input
+                  required
                   id="date"
                   type="date"
-                  required
                   placeholder="Select estimate time"
+                  onChange={(e) => setBirthday(e.target.value)}
                   className={`date_bg date h-11 relative text-15 rounded-md pr-10 pl-3 mt-2 outline-none border text-black`}
                 />
               </label>
               {/* ------ Select ------ */}
               <select
-                className="h-11 relative text-base rounded-md pr-10 pl-3 mt-2 outline-none border text-black"
+                required
                 placeholder="Статус"
+                onChange={(e) => setStatus(e.target.value)}
+                className="h-11 relative text-base rounded-md pr-10 px-3 mt-2 outline-none border text-[#B9B9B9]"
               >
-                <option disabled selected>
-                  Статус
+                <option value="aктив" defaultChecked>
+                  Актив
                 </option>
-                <option value="aктив">Актив</option>
                 <option value="не_актив">Не актив</option>
                 <option value="yдален">Удален</option>
               </select>
               <select
-                className="h-11 relative text-base rounded-md pr-10 pl-3 mt-2 outline-none border text-black"
-                placeholder="Статус"
+                required
+                placeholder="Выберите роль ползователя"
+                onChange={(e) => setRole(e.target.value)}
+                className="h-11 relative text-base rounded-md pr-10 px-3 mt-2 outline-none border text-[#B9B9B9]"
               >
-                <option disabled selected>
-                  Выберите роль ползователя
+                <option value="aдмин" defaultChecked>
+                  Админ
                 </option>
-                <option value="admin">Админ</option>
-                <option value="super_admin">Супер Админ</option>
+                <option value="cупер_aдмин">Супер Админ</option>
                 <option value="user">User</option>
               </select>
               {/* ------ Password ------ */}
@@ -334,7 +376,7 @@ function UserPage() {
                   htmlFor="outlined_successs"
                   className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >
-                  Пароль
+                  Потвердите пароль
                 </label>
               </div>
               <div className="relative mb-5">

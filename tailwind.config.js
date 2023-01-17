@@ -54,6 +54,7 @@ module.exports = {
         submitBtnBg: "#2B3D91",
         modalBg: " rgba(0, 0, 0, 0.15)",
         bgUpload: "#FBFBFC",
+        bgUpload1: "rgba(55, 125, 255, 0.1)",
       },
       colors: {
         addProductColor: "#24283A",

@@ -1,16 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { Modal } from "../../../../components/Modal/Modal";
+import Label from "../../../../components/Label/Label";
 import Dounload from "../../../../Assets/Images/HomeContentImg/dounload.svg";
 import delterImgAdded from "../../../../Assets/Images/HomeContentImg/addedImgDel.svg";
 import delterImgUnAdded from "../../../../Assets/Images/HomeContentImg/addUnUpload.svg";
+import deleteIcon from "../../../../Assets/Images/ProductsImgs/deleteIcon.svg";
 import * as Yup from "yup";
 // Images
 import MButton from "../../../../BaseComponents/MButton/MButton";
-// const env = process.env.REACT_APP_ALL_API;
-// const token = JSON.parse(window.localStorage.getItem("token"));
-export default function AtributPage({ infoPage, imgPage, atrPage }) {
+import { useRef } from "react";
+import axios from "axios";
+const env = process.env.REACT_APP_ALL_API;
+const token = JSON.parse(window.localStorage.getItem("token"));
+export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
   const [imgUrl, setImgUrl] = useState([]);
   const [getImg, setGetImg] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
+  const [datas, setDatas] = useState(JSON.parse(window.localStorage.getItem("atributes")) || []);
+  const modalselectVal = useRef();
+  let formdata = new FormData();
+  let collectingImgs = [];
   const initialValues = {
     ru_name: "",
     ru_price: "",
@@ -62,6 +73,26 @@ export default function AtributPage({ infoPage, imgPage, atrPage }) {
         },
       ]);
     }
+    imgUrl.map((item) => collectingImgs.push(item.url));
+    for (const item of collectingImgs) {
+      formdata.append("image", item);
+    }
+    axios
+      .post(`${env}media`, formdata, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          console.log(res);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleSubmitSelect = (evt) => {
+    evt.preventDefault();
+    setShowModal(false);
   };
   return (
     <div>
@@ -100,7 +131,11 @@ export default function AtributPage({ infoPage, imgPage, atrPage }) {
             <div className="space-y-6 mt-6">
               <div className="flex items-center justify-between">
                 <h2 className="font-bold text-lg text-[#2B3D90]">Атрибуты</h2>
-                <button type="button" className="text-sm text-[#109EF4]">
+                <button
+                  onClick={() => setShowModal(true)}
+                  type="button"
+                  className="text-sm text-[#109EF4]"
+                >
                   + Добавить атрибуть
                 </button>
               </div>
@@ -174,7 +209,12 @@ export default function AtributPage({ infoPage, imgPage, atrPage }) {
               ) : null}
             </label>
             <div>
-              <h2 className="font-medium text-bold mt-6 mb-2">Изображение</h2>
+              <div className="flex items-center mt-6 mb-2 space-x-2">
+                <h2 className="font-medium text-bold">Изображение</h2>
+                <button onClick={() => setShowModal1(true)} type="button">
+                  <p className="font-medium text-bold text-[#2B3D90]">| Выбрать медиа</p>
+                </button>
+              </div>
               <label className="inline-block mb-4   ">
                 <input
                   required
@@ -228,6 +268,54 @@ export default function AtributPage({ infoPage, imgPage, atrPage }) {
           </MButton>
         </div>
       </form>
+      <Modal isVisible={showModal1} onClose={() => setShowModal1(false)}>
+        <div className="w-[730px]">Rasmlar keladi</div>
+      </Modal>
+      <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
+        <div className="w-[730px]">
+          <div className="flex mb-6 items-center justify-between">
+            <h2 className="font-bold text-[24px] leading-[32px] text-[#24283A]">
+              Добавить атрибуть
+            </h2>
+            <button onClick={() => setShowModal(false)}>
+              <img src={deleteIcon} width={32} height={32} alt="delete icon" />
+            </button>
+          </div>
+          <Label
+            datas={datas}
+            setDatas={setDatas}
+            gettingName={"attributes/attributes"}
+            localName={"atributes"}
+            renderName={"attribute_ru"}
+            handleSubmitSelect={handleSubmitSelect}
+          >
+            <label className="flex flex-col">
+              Тип атрибуты
+              <select
+                ref={modalselectVal}
+                className="w-[330px] mt-3 rounded-lg border-2 outline-none p-4 border-[#E3E5E5]"
+              >
+                {datas.length > 0 &&
+                  datas.map((item) => <option key={item.id}>{item.attribute_ru}</option>)}
+              </select>
+            </label>
+            <div className="flex items-center mt-6 justify-between">
+              <button
+                type="reset"
+                className="w-[48%] py-3 bg-[#F2F2F2] font-medium text-lg leading-[120%] rounded-xl text-[#2B3D91]"
+              >
+                Отменить
+              </button>
+              <button
+                type="submit"
+                className="w-[48%] py-3 bg-[#2B3D90] font-medium text-lg leading-[120%] rounded-xl text-[#fff]"
+              >
+                Добавить
+              </button>
+            </div>
+          </Label>
+        </div>
+      </Modal>
     </div>
   );
 }

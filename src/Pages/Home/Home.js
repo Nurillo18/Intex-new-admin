@@ -70,7 +70,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <Products></Products>
+        {/* <Products></Products> */}
       </div>
     </>
   );
