@@ -1,17 +1,112 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import TableContactRow from "./CallBackTable";
 import MButton from "../../BaseComponents/MButton/MButton";
 // Images
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
+import THead from "../../components/THead/THead";
+import TBody from "../../components/TBody/TBody";
 
-import { useSelector, useDispatch } from "react-redux";
-import { searchProduction } from "../../redux/siteDataReducer";
+const env = process.env.REACT_APP_ALL_API;
+
+const data = [
+  {
+    title: "ID",
+    image: true,
+    style: "w-20",
+  },
+  {
+    title: "Имя",
+    image: true,
+    style: "w-[248px]",
+  },
+  {
+    title: "Роль ползователя",
+    image: true,
+    style: "w-[170px]",
+  },
+  {
+    title: "Статус",
+    image: false,
+    style: "w-[140px]",
+  },
+  {
+    title: "Последний активность",
+    image: false,
+    style: "w-[188px]",
+  },
+  {
+    title: "Номер телефона",
+    image: true,
+    style: "w-[162px]",
+  },
+  {
+    title: "Дата рождение",
+    image: false,
+    style: "w-[120px]",
+  },
+];
 
 export default function Home() {
-  const search = useSelector((state) => state.data.search);
- 
-  const dispatch = useDispatch();
+  const [products, setProducts] = useState([]);
+  // const [loader, setLoader] = useState([]);
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
+  useEffect(() => {
+    // setLoader(true);
+    axios
+      .get(`${env}consultations?page=${1}&limit=${10}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setProducts(res?.data.result);
+      })
+      .finally(() => {
+        // setLoader(false);
+      });
+  }, [token]);
+  products;
+
+  // ------> Table Row Information
+  const vitalData = products.map((item) => {
+    return [
+      {
+        title: item.id,
+        style: "w-20",
+      },
+      {
+        title: item.about_en,
+        image: item.image[0],
+        style: "w-[248px] flex pl-3",
+      },
+      {
+        title: item.price,
+        style: "w-[170px] pl-3",
+      },
+      {
+        title: item.category_en,
+        style: "w-[140px] pl-3",
+        textClass:
+          "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white",
+      },
+      {
+        title: item.category_en,
+        style: "w-[188px] pl-3",
+      },
+      {
+        title: "28.09.2022 14:00",
+        style: "w-[162px]",
+      },
+      {
+        title: "28.09.2022",
+        style: "w-[100px]",
+      },
+    ];
+  });
+
   return (
     <>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
@@ -41,10 +136,6 @@ export default function Home() {
                 type="text"
                 placeholder="Поиск товара"
                 autoComplete="off"
-                value={search}
-                onChange={(e) => {
-                  dispatch(searchProduction(e.target.value))
-                }}
               />
             </div>
             <div className="flex items-center">
@@ -74,8 +165,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="mt-5">
-          <TableContactRow />
+        <div className="pt-5">
+          <table className="w-full">
+            <THead data={data}></THead>
+            <TBody vitalData={vitalData}></TBody>
+          </table>
         </div>
       </div>
     </>

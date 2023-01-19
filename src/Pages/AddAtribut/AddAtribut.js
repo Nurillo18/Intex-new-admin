@@ -8,7 +8,11 @@ import FormikControl from "../../BaseComponents/FormInput/FormikControl";
 import DropDown from "../../BaseComponents/DropDown/DropDown";
 import MButton from "../../BaseComponents/MButton/MButton";
 
-import { TagsInputEng, TagsInputRu, TagsInputUz } from "../../BaseComponents/TagsInput/TagsInput";
+import {
+  TagsInputEng,
+  TagsInputRu,
+  TagsInputUz,
+} from "../../BaseComponents/TagsInput/TagsInput";
 // --- Images
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import DropImg from "../../Assets/Images/HomeContentImg/Drop.svg";
@@ -62,10 +66,16 @@ export default function AddAtribut() {
       return;
     }
 
-    if (tags_en.length !== tags_ru.length || tags_en.length !== tags_uz.length) {
+    if (
+      tags_en.length !== tags_ru.length ||
+      tags_en.length !== tags_uz.length
+    ) {
       return;
     }
-    if (tags_en.length === tags_ru.length && tags_en.length === tags_uz.length) {
+    if (
+      tags_en.length === tags_ru.length &&
+      tags_en.length === tags_uz.length
+    ) {
       for (let i = 0; i < tags_en.length; i++) {
         arr.push({
           attribute_ru: tags_ru[i],
@@ -92,7 +102,7 @@ export default function AddAtribut() {
           setTimeout(() => {
             navigate("/atribut");
           }, 1000);
-          console.log(res);
+          res;
         }
       })
       .catch((err) => {
@@ -119,11 +129,15 @@ export default function AddAtribut() {
         </Link>
         <span className="ml-2.5 text-navSubColor ">/</span>
         <Link to="/atribut">
-          <h2 className="font-normal text-supportColor text-xs ml-2.5">Атрибуты</h2>
+          <h2 className="font-normal text-supportColor text-xs ml-2.5">
+            Атрибуты
+          </h2>
         </Link>
         <span className="ml-2.5 text-navSubColor ">/</span>
         <Link to="">
-          <h2 className="font-normal text-navSubColor text-xs ml-2.5">Добавить атрибуть</h2>
+          <h2 className="font-normal text-navSubColor text-xs ml-2.5">
+            Добавить атрибуть
+          </h2>
         </Link>
       </div>
 
@@ -149,7 +163,13 @@ export default function AddAtribut() {
                   imgURL={DropImg}
                   rotateDelete={navBarDrop ? "-rotate-180" : "-rotate-0"}
                 >
-                  <div className={navBarDrop ? "h-auto overflow-auto" : "h-0 overflow-hidden"}>
+                  <div
+                    className={
+                      navBarDrop
+                        ? "h-auto overflow-auto"
+                        : "h-0 overflow-hidden"
+                    }
+                  >
                     <div className="flex mb-6">
                       <FormikControl
                         control="input"
@@ -178,11 +198,19 @@ export default function AddAtribut() {
                   imgAlt="dropimg"
                   wDrop="12"
                   hdrop="9"
-                  downClick={() => setNavBarDrop1(!navBarDrop1) && setNavBarDrop(false)}
+                  downClick={() =>
+                    setNavBarDrop1(!navBarDrop1) && setNavBarDrop(false)
+                  }
                   imgURL={DropImg}
                   rotateDelete={navBarDrop1 ? "-rotate-180" : "-rotate-0"}
                 >
-                  <div className={navBarDrop1 ? "h-auto overflow-auto" : "h-0 overflow-hidden"}>
+                  <div
+                    className={
+                      navBarDrop1
+                        ? "h-auto overflow-auto"
+                        : "h-0 overflow-hidden"
+                    }
+                  >
                     <div className="flex mb-6">
                       <FormikControl
                         control="input"
@@ -215,7 +243,13 @@ export default function AddAtribut() {
                   imgURL={DropImg}
                   rotateDelete={navBarDrop2 ? "-rotate-180" : "-rotate-0"}
                 >
-                  <div className={navBarDrop2 ? "h-auto overflow-auto" : "h-0 overflow-hidden"}>
+                  <div
+                    className={
+                      navBarDrop2
+                        ? "h-auto overflow-auto"
+                        : "h-0 overflow-hidden"
+                    }
+                  >
                     <div className="flex mb-6">
                       <FormikControl
                         control="input"

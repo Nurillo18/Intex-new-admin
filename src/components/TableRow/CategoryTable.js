@@ -48,7 +48,7 @@ export default function TableCat({
         },
       })
       .then((res) => refresh())
-      .catch((err) => console.log(err));
+      .catch((err) => err);
   };
 
   // --- Close

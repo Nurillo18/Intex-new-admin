@@ -23,8 +23,8 @@ export default function TableRow2({
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   const DeleteItems = () => {
-    console.log(data.id);
-    console.log(token);
+    data.id;
+    token;
 
     axios
       .delete(
@@ -36,11 +36,11 @@ export default function TableRow2({
         }
       )
       .then(() => {
-        console.log("deleted");
+        ("deleted");
         refresh();
       })
       .catch((err) => {
-        console.log(err);
+        err;
       });
   };
 

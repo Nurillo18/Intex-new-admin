@@ -42,7 +42,7 @@ export default function ContactTable({
         refresh();
       })
       .catch((err) => {
-        console.log(err);
+        err;
       });
   };
   // --- Colse

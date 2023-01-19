@@ -76,7 +76,7 @@ const Products = () => {
       )
       .then((res) => {
         setData(res?.data?.result);
-        // console.log(res?.data?.result);
+        // (res?.data?.result);
         setTotalpage(res.data?.total_count.count);
         setLoader(false);
       });
@@ -102,7 +102,7 @@ const Products = () => {
     </svg>
   );
   const IdArray = data.result?.map((res) => res.id);
-  // console.log(IdArray);
+  // (IdArray);
   const DeleteAll = (e) => {
     axios
       .delete(
@@ -118,11 +118,11 @@ const Products = () => {
         }
       )
       .then((res) => {
-        console.log(res, IdArray);
+        res, IdArray;
         setRefresh(!refresh);
       })
       .catch((err) => {
-        console.log(err, IdArray);
+        err, IdArray;
       });
   };
 

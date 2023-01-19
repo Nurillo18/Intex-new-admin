@@ -1,4 +1,6 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import MButton from "../../BaseComponents/MButton/MButton";
@@ -12,7 +14,7 @@ import Visible from "../../Assets/Images/LoginImg/Visible.png";
 import IsVisible from "../../Assets/Images/LoginImg/IsVisible.png";
 import THead from "../../components/THead/THead";
 import TBody from "../../components/TBody/TBody";
-import { useEffect } from "react";
+// import useAdmins from "../../Hook/useAdmins";
 
 const env = process.env.REACT_APP_ALL_API;
 
@@ -56,6 +58,7 @@ const data = [
 
 function UserPage() {
   const [getImg, setGetImg] = useState([]);
+  const [image, setImage] = useState();
   const [showModal, setShowModal] = useState(false);
   // ------> Input States
   const [icon, setIcon] = useState(false);
@@ -64,6 +67,8 @@ function UserPage() {
   const [password1, setPassword1] = useState("");
   // ------> Data
   const [products, setProducts] = useState([]);
+  // const [admins, setAdmins] = useAdmins();
+
   // ------> User Informations States
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
@@ -72,46 +77,59 @@ function UserPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  // ------> Get Products
+  const navigate = useNavigate();
+
+  const token = JSON.parse(window.localStorage.getItem("token"));
+
+  // ------> Get Users
   useEffect(() => {
-    fetch(`${env}products?page=0&limit=10`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data?.result);
+    axios
+      .get(`${env}users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-  }, []);
+  }, [token]);
 
   // ------> Table Row Information
-  const vitalData = products.map((item) => {
+  const vitalData = products?.map((item) => {
     return [
       {
-        title: item.id,
+        title: item?.id,
         style: "w-20",
       },
       {
-        title: item.about_en,
-        image: item.image[0],
+        title: item?.last_name + " " + item?.first_name,
+        image: null,
         style: "w-[248px] flex pl-3",
       },
       {
-        title: item.price,
+        title: item?.role,
         style: "w-[170px] pl-3",
       },
       {
-        title: item.category_en,
+        title: item?.status,
         style: "w-[140px] pl-3",
-        textClass: "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white",
+        textClass: `${
+          item?.status ? "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white" : ""
+        } `,
       },
       {
-        title: item.category_en,
+        title: item?.created_at,
         style: "w-[188px] pl-3",
       },
       {
-        title: "28.09.2022 14:00",
+        title: item?.phone,
         style: "w-[162px]",
       },
       {
-        title: "28.09.2022",
+        title: item?.birth_date,
         style: "w-[100px]",
       },
     ];
@@ -119,35 +137,74 @@ function UserPage() {
 
   // ------> Upload Img
   const uploadImg = (evt) => {
-    console.log(evt.target.files[0]);
     setGetImg([
       {
         img: window.URL.createObjectURL(evt.target.files[0]),
       },
     ]);
+    let formData = new FormData();
+    formData.append("image", evt.target.files[0]);
+
+    // ------> Get Image Url
+    axios
+      .post(`${env}media`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => setImage(res?.data?.image))
+      .catch((err) => console.log(err));
   };
 
   const userDeteals = {
-    name: name,
-    surName: surName,
-    image: getImg,
     first_name: name,
     last_name: surName,
     password: password === password1 ? password : "",
     phone: "+998" + phoneNumber,
-    email: "example@gmail.com",
-    address: "string",
+    email: null,
     birth_date: birthday,
-    user_image: getImg,
+    user_image: image ? image[0] : "",
     status: status,
-    gender: "male",
+    gender: null,
     role: role,
+    is_active: true,
   };
 
   const userCreate = (e) => {
     e.preventDefault();
 
-    console.log(userDeteals);
+    axios
+      .post(`${env}users`, userDeteals, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          axios
+            .get(`${env}users`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((res) => {
+              setProducts(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        e.target.reset();
+        setShowModal(false);
+      });
+  };
+
+  const pageForUser = (data) => {
+    // setAdmins(data);
+    navigate("/userDetails");
   };
 
   return (
@@ -210,7 +267,7 @@ function UserPage() {
       <div className="px-8">
         <table className="w-full">
           <THead data={data}></THead>
-          <TBody vitalData={vitalData}></TBody>
+          <TBody vitalData={vitalData} onClick={pageForUser}></TBody>
         </table>
       </div>
       {/* ---------------- Modal ------------------- */}
@@ -319,27 +376,28 @@ function UserPage() {
               </label>
               {/* ------ Select ------ */}
               <select
-                required
                 placeholder="Статус"
                 onChange={(e) => setStatus(e.target.value)}
-                className="h-11 relative text-base rounded-md pr-10 px-3 mt-2 outline-none border text-[#B9B9B9]"
+                className="h-11 relative text-base rounded-md pr-10 px-3 mt-2 outline-none border text-black"
+                required
               >
-                <option value="aктив" defaultChecked>
-                  Актив
+                <option value="Статус" hidden>
+                  Статус
                 </option>
-                <option value="не_актив">Не актив</option>
-                <option value="yдален">Удален</option>
+                <option value="registered">Registered</option>
+                <option value="not_registered">Not_Registered</option>
               </select>
               <select
-                required
                 placeholder="Выберите роль ползователя"
                 onChange={(e) => setRole(e.target.value)}
-                className="h-11 relative text-base rounded-md pr-10 px-3 mt-2 outline-none border text-[#B9B9B9]"
+                className="h-11 relative text-base rounded-md pr-10 px-3 mt-2 outline-none border text-black"
+                required
               >
-                <option value="aдмин" defaultChecked>
-                  Админ
+                <option value="Статус" hidden>
+                  Роль Ползователя
                 </option>
-                <option value="cупер_aдмин">Супер Админ</option>
+                <option value="admin">Admin</option>
+                <option value="super_admin">Super Admin</option>
                 <option value="user">User</option>
               </select>
               {/* ------ Password ------ */}
@@ -376,12 +434,12 @@ function UserPage() {
                   htmlFor="outlined_successs"
                   className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >
-                  Потвердите пароль
+                  Пароль
                 </label>
               </div>
               <div className="relative mb-5">
                 <input
-                  id="outlined_successs"
+                  id="successs"
                   value={password1}
                   type={icon1 ? "text" : "password"}
                   onChange={(e) => setPassword1(e.target.value)}
@@ -409,10 +467,10 @@ function UserPage() {
                   ""
                 )}
                 <label
-                  htmlFor="outlined_successs"
+                  htmlFor="successs"
                   className="absolute text-base text-inputPleacholderColor dark:text-inputPleacholderColor duration-300 transform -translate-y-4 scale-75 top-[5px] z-10 origin-[0] bg-white dark:bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-[5px] peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
                 >
-                  Пароль
+                  Потвердите пароль
                 </label>
               </div>
             </div>

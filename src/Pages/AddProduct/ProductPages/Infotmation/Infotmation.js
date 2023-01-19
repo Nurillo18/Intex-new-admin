@@ -18,7 +18,9 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
   const [getImg, setGetImg] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
-  const [datas, setDatas] = useState(JSON.parse(window.localStorage.getItem("atributes")) || []);
+  const [datas, setDatas] = useState(
+    JSON.parse(window.localStorage.getItem("atributes")) || []
+  );
   const modalselectVal = useRef();
   let formdata = new FormData();
   let collectingImgs = [];
@@ -37,7 +39,10 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
     const informationResult = {
       name_uz: values.uzName,
     };
-    window.localStorage.setItem("information", JSON.stringify(informationResult));
+    window.localStorage.setItem(
+      "information",
+      JSON.stringify(informationResult)
+    );
   };
   function handldelete(id) {
     let newTodo = getImg.filter((e) => e.id !== id);
@@ -85,10 +90,10 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
       })
       .then((res) => {
         if (res.status === 201) {
-          console.log(res);
+          res;
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => err);
   };
   const handleSubmitSelect = (evt) => {
     evt.preventDefault();
@@ -105,7 +110,9 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
       >
         <div className="flex justify-between border-b-2 pb-6 mb-6">
           <div className="w-[30%]">
-            <h2 className="font-bold text-lg mb-6 text-[#2B3D90]">Информация и изображение </h2>
+            <h2 className="font-bold text-lg mb-6 text-[#2B3D90]">
+              Информация и изображение{" "}
+            </h2>
             <label className="text-base relative flex flex-col w-[346px]">
               Название продукта
               <input
@@ -212,7 +219,9 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
               <div className="flex items-center mt-6 mb-2 space-x-2">
                 <h2 className="font-medium text-bold">Изображение</h2>
                 <button onClick={() => setShowModal1(true)} type="button">
-                  <p className="font-medium text-bold text-[#2B3D90]">| Выбрать медиа</p>
+                  <p className="font-medium text-bold text-[#2B3D90]">
+                    | Выбрать медиа
+                  </p>
                 </button>
               </div>
               <label className="inline-block mb-4   ">
@@ -244,7 +253,12 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
                       height="116"
                     />
                     <div className="flex cursor-pointer items-center space-x-2 absolute top-2.5 right-2">
-                      <img src={delterImgUnAdded} alt="delete img" width="32" height="32" />
+                      <img
+                        src={delterImgUnAdded}
+                        alt="delete img"
+                        width="32"
+                        height="32"
+                      />
                       <img
                         onClick={() => handldelete(item.id)}
                         src={delterImgAdded}
@@ -296,7 +310,9 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
                 className="w-[330px] mt-3 rounded-lg border-2 outline-none p-4 border-[#E3E5E5]"
               >
                 {datas.length > 0 &&
-                  datas.map((item) => <option key={item.id}>{item.attribute_ru}</option>)}
+                  datas.map((item) => (
+                    <option key={item.id}>{item.attribute_ru}</option>
+                  ))}
               </select>
             </label>
             <div className="flex items-center mt-6 justify-between">

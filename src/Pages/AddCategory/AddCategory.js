@@ -58,10 +58,16 @@ export default function AddCategory() {
     if (tags_en.length === 0 || tags_ru.length === 0 || tags_uz.length === 0) {
       return;
     }
-    if (tags_en.length !== tags_ru.length || tags_en.length !== tags_uz.length) {
+    if (
+      tags_en.length !== tags_ru.length ||
+      tags_en.length !== tags_uz.length
+    ) {
       return;
     }
-    if (tags_en.length === tags_ru.length && tags_en.length === tags_uz.length) {
+    if (
+      tags_en.length === tags_ru.length &&
+      tags_en.length === tags_uz.length
+    ) {
       for (let i = 0; i < tags_en.length; i++) {
         arr.push({
           category_ru: tags_ru[i],
@@ -72,7 +78,7 @@ export default function AddCategory() {
       }
       setInfo([arr]);
     } else {
-      console.log(" Network Error! ");
+      (" Network Error! ");
     }
 
     axios
@@ -83,21 +89,21 @@ export default function AddCategory() {
       })
       .then((res) => {
         if (res.status === 201) {
-          console.log(res);
+          res;
           navigate("/category");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => err);
 
-    // console.log(values);
+    // (values);
     resetForm();
     setTags_ru(tags_ru.length === 0);
     setTags_en(tags_en.length === 0);
     setTags_uz(tags_uz.length === 0);
-    console.log(arr);
+    arr;
   };
   useEffect(() => {
-    console.log(info);
+    info;
   }, [info, setInfo]);
 
   return (
@@ -118,7 +124,11 @@ export default function AddCategory() {
                 hdrop={9}
                 imgURL={DropImg}
                 imgAlt={"Drop img"}
-                rotateDelete={showContent ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}
+                rotateDelete={
+                  showContent
+                    ? "-rotate-180 duration-300"
+                    : "-rotate-0 duration-300"
+                }
               >
                 <div
                   className={`${
@@ -148,11 +158,17 @@ export default function AddCategory() {
                 hdrop={9}
                 imgURL={DropImg}
                 imgAlt={"Drop img"}
-                rotateDelete={enShowContent ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}
+                rotateDelete={
+                  enShowContent
+                    ? "-rotate-180 duration-300"
+                    : "-rotate-0 duration-300"
+                }
               >
                 <div
                   className={`${
-                    enShowContent ? "h-auto overflow-auto" : "h-0 overflow-hidden"
+                    enShowContent
+                      ? "h-auto overflow-auto"
+                      : "h-0 overflow-hidden"
                   } duration-300`}
                 >
                   <div className="flex items-end justify-between">
@@ -178,11 +194,17 @@ export default function AddCategory() {
                 hdrop={9}
                 imgURL={DropImg}
                 imgAlt={"Drop img"}
-                rotateDelete={uzShowContent ? "-rotate-180 duration-300" : "-rotate-0 duration-300"}
+                rotateDelete={
+                  uzShowContent
+                    ? "-rotate-180 duration-300"
+                    : "-rotate-0 duration-300"
+                }
               >
                 <div
                   className={`${
-                    uzShowContent ? "h-auto overflow-auto" : "h-0 overflow-hidden"
+                    uzShowContent
+                      ? "h-auto overflow-auto"
+                      : "h-0 overflow-hidden"
                   } duration-300`}
                 >
                   <div className="flex items-end justify-between">

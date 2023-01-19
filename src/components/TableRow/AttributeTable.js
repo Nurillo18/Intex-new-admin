@@ -46,7 +46,7 @@ export default function AttributeTable({
       .then(() => {
         refresh();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => err);
   };
 
   // --- Close Icon

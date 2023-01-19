@@ -49,11 +49,11 @@ function OrderModal({ isShown, onClosed, items, refreshed }) {
         }
       )
       .then(() => {
-        console.log("Submitted");
+        ("Submitted");
         refreshed();
       })
       .catch(() => {
-        console.log("Internal error");
+        ("Internal error");
       });
     e.preventDefault();
     onClosed();

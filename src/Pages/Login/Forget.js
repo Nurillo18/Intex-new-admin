@@ -30,7 +30,7 @@ function Forget() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        err;
         if (err?.response?.status === 400) {
           toast.error("Ваш эл.почта неверен");
         } else if (err?.message === "Network Error") {
@@ -57,15 +57,29 @@ function Forget() {
               to="/"
               className="bg-blue-form_btn flex items-center justify-center w-8 h-8 rounded-lg absolute left-6 top-6"
             >
-              <img src={Arrow} alt="arrow" width={24} height={24} property={"true"} />
+              <img
+                src={Arrow}
+                alt="arrow"
+                width={24}
+                height={24}
+                property={"true"}
+              />
             </Link>
-            <h1 className="font-bold text-3xl text-supportColor">INTEX-MARKET</h1>
-            <p className="font-bold text-2xl text-navBarColor mt-3">Сброс пароля</p>
-            <p className="text-sm text-navBarColor mt-2 mb-5 w-10/12 mx-auto">
-              Для сброса пароля на ваш номер телефона придет SMS-сообщение, через которое вы сможете
-              обновить пароль.
+            <h1 className="font-bold text-3xl text-supportColor">
+              INTEX-MARKET
+            </h1>
+            <p className="font-bold text-2xl text-navBarColor mt-3">
+              Сброс пароля
             </p>
-            <form className="flex flex-col text-center" onSubmit={postRequest} autoComplete="off">
+            <p className="text-sm text-navBarColor mt-2 mb-5 w-10/12 mx-auto">
+              Для сброса пароля на ваш номер телефона придет SMS-сообщение,
+              через которое вы сможете обновить пароль.
+            </p>
+            <form
+              className="flex flex-col text-center"
+              onSubmit={postRequest}
+              autoComplete="off"
+            >
               <div className="relative">
                 <input
                   value={email}
@@ -87,7 +101,13 @@ function Forget() {
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (
-                    <img className="mx-auto" src={Loader} alt="loader" width={28} height={28} />
+                    <img
+                      className="mx-auto"
+                      src={Loader}
+                      alt="loader"
+                      width={28}
+                      height={28}
+                    />
                   ) : (
                     "Отправить СМС"
                   )}

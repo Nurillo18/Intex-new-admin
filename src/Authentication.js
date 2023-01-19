@@ -13,6 +13,7 @@ import AddAtribut from "./Pages/AddAtribut/AddAtribut";
 import UserPage from "./Pages/UserPage/UserPage";
 import NotFound from "./Pages/NotFound/NotFound";
 import "./Assets/main.css";
+import UserDetails from "./Pages/UserDetails/UserDetails";
 
 export default function Authentication() {
   return (
@@ -32,6 +33,7 @@ export default function Authentication() {
             <Route path="/addCategory" element={<AddCategory />} />
             <Route path="/addAtribut" element={<AddAtribut />} />
             <Route path="/userpage" element={<UserPage />} />
+            <Route path="/userDetails" element={<UserDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

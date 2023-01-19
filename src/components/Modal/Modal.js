@@ -15,9 +15,7 @@ export const Modal = ({ isVisible, onClose, children, className, glava }) => {
       onClick={handleClick}
       className={`fixed inset-0 bg-modalBg bg-opacity-40 flex justify-center items-center z-50 ${glava}`}
     >
-      <div
-        className={`bg-white p-4 md:p-6 rounded-lg mx-3 md:mx-4 ${className}`}
-      >
+      <div className={`bg-white p-4 md:p-6 rounded-lg mx-3 md:mx-4 ${className}`}>
         {/* Content */}
         {children}
       </div>

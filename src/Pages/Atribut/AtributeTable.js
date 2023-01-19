@@ -19,7 +19,7 @@ const AtributeProducts = () => {
   const [data, setData] = React.useState([]);
   const [deleteAll, setDeleteAll] = React.useState([]);
 
-  const token = JSON.parse(window.localStorage.getItem('token'))
+  const token = JSON.parse(window.localStorage.getItem("token"));
 
   const handleChange = (evt) => {
     if (evt.target.checked) {
@@ -93,11 +93,11 @@ const AtributeProducts = () => {
         }
       )
       .then((res) => {
-        console.log(res, IdArray);
+        res, IdArray;
         setRefresh(!refresh);
       })
       .catch((err) => {
-        console.log(err, IdArray);
+        err, IdArray;
       });
   };
   return (

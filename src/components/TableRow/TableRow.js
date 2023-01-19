@@ -53,7 +53,7 @@ export default function TableRow({
         refresh();
       })
       .catch((err) => {
-        console.log(err);
+        err;
       });
   };
   // --- Colse
