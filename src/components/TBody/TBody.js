@@ -11,7 +11,6 @@ import { useEffect } from "react";
 const env = process.env.REACT_APP_ALL_API;
 
 export default function TBody({ vitalData, urlRoute }) {
-  const [deletedItem, setDeletedItem] = React.useState(0);
   const [data, setData] = useState([]);
   useEffect(() => {
     setData(vitalData);
@@ -52,20 +51,18 @@ export default function TBody({ vitalData, urlRoute }) {
               </td>
               {el.data.map((a, i) => {
                 return (
-                  <td
-                    key={i}
-                    className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}
-                  >
+                  <td key={i} className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}>
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
-                        src="https://via.placeholder.com/42x38"
+                        src={a.image || "https://via.placeholder.com/42x38"}
                         alt="basseyn"
                       />
                     ) : null}
-                    {(typeof a.title === "object") ? (
-                      a.title.map((el, m) => (el ? <MFilter key={m}>{el}</MFilter> : <span></span> ))
-                    ) : (
+
+                    {typeof a.title === "object" && a.title != null ? (
+                      a?.title?.map((el, i) =>
+                        el.length ? <MFilter key={i}>{el}</MFilter> : <span key={i}></span>)) : (
                       <span
                         className={`${a.textClass} ${
                           a?.label ? a?.label : "text-[#24283A] text-sm"

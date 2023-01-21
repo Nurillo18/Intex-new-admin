@@ -14,9 +14,10 @@ import Visible from "../../Assets/Images/LoginImg/Visible.png";
 import IsVisible from "../../Assets/Images/LoginImg/IsVisible.png";
 import THead from "../../components/THead/THead";
 import TBody from "../../components/TBody/TBody";
-// import useAdmins from "../../Hook/useAdmins";
+import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 
 const env = process.env.REACT_APP_ALL_API;
+const envImg = process.env.REACT_APP_IMAGE;
 
 const data = [
   {
@@ -76,9 +77,6 @@ function UserPage() {
   const [surName, setSurName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [birthday, setBirthday] = useState("");
-
-  const navigate = useNavigate();
-
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   // ------> Get Users
@@ -99,40 +97,43 @@ function UserPage() {
 
   // ------> Table Row Information
   const vitalData = products?.map((item) => {
-    return [
-      {
-        title: item?.id,
-        style: "w-20",
-      },
-      {
-        title: item?.last_name + " " + item?.first_name,
-        image: null,
-        style: "w-[248px] flex pl-3",
-      },
-      {
-        title: item?.role,
-        style: "w-[170px] pl-3",
-      },
-      {
-        title: item?.status,
-        style: "w-[140px] pl-3",
-        textClass: `${
-          item?.status ? "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white" : ""
-        } `,
-      },
-      {
-        title: item?.created_at,
-        style: "w-[188px] pl-3",
-      },
-      {
-        title: item?.phone,
-        style: "w-[162px]",
-      },
-      {
-        title: item?.birth_date,
-        style: "w-[100px]",
-      },
-    ];
+    return {
+      mainId: item.id,
+      data: [
+        {
+          title: item?.id,
+          style: "w-20",
+        },
+        {
+          title: item?.last_name + " " + item?.first_name,
+          image: `${envImg}${item.user_image}`,
+          style: "w-[248px] flex pl-3",
+        },
+        {
+          title: item?.role,
+          style: "w-[170px] pl-3",
+        },
+        {
+          title: item?.status,
+          style: "w-[140px] pl-3",
+          textClass: `${
+            item?.status ? "py-[5px] px-[10px] bg-[#0BCC23] rounded-[4px] text-xs text-white" : ""
+          } `,
+        },
+        {
+          title: item?.created_at,
+          style: "w-[188px] pl-3",
+        },
+        {
+          title: item?.phone,
+          style: "w-[162px]",
+        },
+        {
+          title: item?.birth_date,
+          style: "w-[100px]",
+        },
+      ],
+    };
   });
 
   // ------> Upload Img
@@ -202,11 +203,6 @@ function UserPage() {
       });
   };
 
-  const pageForUser = (data) => {
-    // setAdmins(data);
-    navigate("/userDetails");
-  };
-
   return (
     <>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
@@ -221,7 +217,7 @@ function UserPage() {
           <h2 className="font-normal text-navSubColor text-xs ml-2.5">Пользователи</h2>
         </Link>
       </div>
-      <div className="pt-6 pb-8 px-homeContentPadding ">
+      <div className="pt-6 px-homeContentPadding ">
         <div className="mb-4">
           <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">Пользователи</h2>
           <div className="bg-white py-3 px-4 rounded-xl flex items-center justify-between">
@@ -264,10 +260,15 @@ function UserPage() {
           </div>
         </div>
       </div>
-      <div className="px-8">
+      <div className="bg-white ] rounded-xl mb-[100px] mx-8">
+        <div className="flex py-3 px-3 items-center z-50">
+          <input className="mr-3 w-[18px] h-[18px] cursor-pointer" type="checkbox" />
+          <span className="text-[#b9b9b9] mr-3">0, Выбрано</span>
+          <img className="cursor-pointer" src={Trash} alt="Trash icon" />
+        </div>
         <table className="w-full">
           <THead data={data}></THead>
-          <TBody vitalData={vitalData} onClick={pageForUser}></TBody>
+          <TBody vitalData={vitalData} urlRoute="users"></TBody>
         </table>
       </div>
       {/* ---------------- Modal ------------------- */}
