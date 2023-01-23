@@ -10,8 +10,9 @@ import { useEffect } from "react";
 
 const env = process.env.REACT_APP_ALL_API;
 
-export default function TBody({ vitalData, urlRoute }) {
+export default function TBody({ vitalData, urlRoute, linkUp }) {
   const [data, setData] = useState([]);
+  console.log(vitalData);
   useEffect(() => {
     setData(vitalData);
   }, [vitalData]);
@@ -83,7 +84,7 @@ export default function TBody({ vitalData, urlRoute }) {
                   </td>
                 );
               })}
-              <EditModal modalId={i}></EditModal>
+              <EditModal modalId={i} linkUp={linkUp}></EditModal>
             </tr>
           );
         })}

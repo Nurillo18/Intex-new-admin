@@ -2,8 +2,9 @@ import React from "react";
 import Edit from "../../Assets/Images/TableImgs/edit.svg";
 import Delete from "../../Assets/Images/TableImgs/trash.svg";
 import Dots from "../../Assets/Images/TableImgs/dots.svg";
+import { Link } from "react-router-dom";
 
-export default function EditModal({ modalId }) {
+export default function EditModal({ modalId, linkUp }) {
   const [isModalOpened, setisModalOpened] = React.useState(false);
 
   // ------> Show Modal
@@ -36,10 +37,12 @@ export default function EditModal({ modalId }) {
           isModalOpened ? "grid" : "hidden"
         } absolute -top-[5px] right-[65px] border w-[126px] !bg-white z-5 rounded-[5px] py-1 px-3`}
       >
-        <button className="flex items-center text-xs py-1">
-          <img className="w-6 h-6 mr-1" src={Edit} alt="edit-icon" />
-          Изменить
-        </button>
+        <Link to={linkUp}>
+          <button className="flex items-center text-xs py-1">
+            <img className="w-6 h-6 mr-1" src={Edit} alt="edit-icon" />
+            Изменить
+          </button>
+        </Link>
         <button className="deleteBtn flex items-center text-xs py-1">
           <img
             className="deleteBtn w-6 h-6 mr-1"
