@@ -199,7 +199,7 @@ export default function ProductOrder() {
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full pt-12">
             <THead data={datas} />
-            <TBody vitalData={vitalData} />
+            <TBody vitalData={vitalData} linkUp="/order/update" />
           </table>
         </div>
         <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
