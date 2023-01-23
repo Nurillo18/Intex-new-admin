@@ -30,7 +30,7 @@ function Forget() {
         }
       })
       .catch((err) => {
-        err;
+        console.log(err);
         if (err?.response?.status === 400) {
           toast.error("Ваш эл.почта неверен");
         } else if (err?.message === "Network Error") {

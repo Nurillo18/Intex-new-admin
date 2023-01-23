@@ -13,6 +13,7 @@ import { searchProduction } from '../../redux/siteDataReducer'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios'
+import Trash from "../../Assets/Images/ProductsImgs/trash.svg";
 
 const data = [
   {
@@ -39,13 +40,11 @@ const data = [
 
 export default function Home() {
   const search = useSelector((state) => state.data.search)
-  const [products, setProducts] = useState([])
-  const [limit, setLimit] = React.useState(5)
-  const [totalPage, setTotalpage] = React.useState(0)
   const [atr, setAtr] = React.useState([])
-  const [page, setPage] = React.useState(0)
-
-  const dispatch = useDispatch()
+  const [isChecked, setIsChecked] = React.useState(false);
+  const [deleteAll, setDeleteAll] = React.useState([]);
+  const languages = useSelector((state) => state.data.localization);
+  const lang = useSelector((state) => state.data.lang);
 
   // ----------------------------------------
 
@@ -59,7 +58,7 @@ export default function Home() {
       })
       .catch((err) => console.error(err))
       .finally(() => {})
-  }, [limit, page])
+  }, [])
 
   const vitalData = atr.map((item) => {
     return [
@@ -82,22 +81,6 @@ export default function Home() {
     ]
   })
 
-  const handleChange = (e) => {
-    const { name, checked } = e.target
-
-    if (name === 'allSelect') {
-      let tempUser = vitalData.map((user) => {
-        return { ...user, isChecked: checked }
-      })
-      setProducts(tempUser)
-    } else {
-      let tempUser = vitalData.map((user) =>
-        user.username === name ? { ...user, isChecked: checked } : user,
-      )
-
-      setProducts(tempUser)
-    }
-  }
   return (
     <div>
       <div className="bg-white flex items-center w-full pt-1.5 pb-1.5 px-8">
@@ -129,7 +112,7 @@ export default function Home() {
                 autoComplete="off"
                 value={search}
                 onChange={(e) => {
-                  dispatch(searchProduction(e.target.value))
+                  // dispatch(searchProduction(e.target.value))
                 }}
               />
             </div>
@@ -163,7 +146,18 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* <AtributeProducts /> */}
+        <div className="flex py-3 px-4 items-center w-full rounded-t-xl bg-white">
+        <input
+          type="checkbox"
+          className="mr-3 w-4 h-4 cursor-pointer"
+        />
+        <span className="text-[#b9b9b9] mr-3">0,  Выбрано</span>
+        <img
+          className="cursor-pointer"
+          src={Trash}
+          alt="Trash icon"
+        />
+      </div>
         <table className="w-full">
           <THead data={data}></THead>
           <TBody vitalData={vitalData}></TBody>

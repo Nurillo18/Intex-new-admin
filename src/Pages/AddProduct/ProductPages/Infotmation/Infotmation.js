@@ -90,7 +90,7 @@ export default function AtributPage({ infoPage, imgPage, atrPage, id }) {
       })
       .then((res) => {
         if (res.status === 201) {
-          res;
+          console.log(res);
         }
       })
       .catch((err) => err);

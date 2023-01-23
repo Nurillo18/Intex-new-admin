@@ -91,11 +91,11 @@ const ProductsCategory = () => {
         }
       )
       .then((res) => {
-        res, IdArray;
+        console.log(res, IdArray);
         setRefresh(!refresh);
       })
       .catch((err) => {
-        err, IdArray;
+        console.log(err, IdArray);
       });
   };
 
@@ -121,7 +121,7 @@ const ProductsCategory = () => {
       style: "w-[474px]",
     },
   ];
-  data;
+
   const vitalData = data.map((item) => {
     return [
       {

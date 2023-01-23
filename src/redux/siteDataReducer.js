@@ -5,7 +5,6 @@ const siteProducts = createSlice({
   initialState: {
     localization: languages,
     lang: "ru",
-
     search: "",
   },
   reducers: {

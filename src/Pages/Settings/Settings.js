@@ -142,7 +142,7 @@ export default function Home() {
       })
       .then((res) => {
         if (res?.status === 200) {
-          res;
+          console.log(res);
           axios.get(`${env}social-networks`).then((data) => {
             setLinks(data?.data);
           });

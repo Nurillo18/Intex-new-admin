@@ -102,7 +102,7 @@ export default function AddAtribut() {
           setTimeout(() => {
             navigate("/atribut");
           }, 1000);
-          res;
+          // res;
         }
       })
       .catch((err) => {

@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import Edit from "../../Assets/Images/TableImgs/edit.svg";
 import Delete from "../../Assets/Images/TableImgs/trash.svg";
 import Dots from "../../Assets/Images/TableImgs/dots.svg";
@@ -21,16 +20,6 @@ export default function EditModal({ modalId }) {
   });
 
   // ------> Delete Row
-  const handleDelete = () => {
-    axios.delete("URL", {
-      headers: {
-        Authorization: ``,
-      },
-      data: {
-        source: "source",
-      },
-    });
-  };
 
   return (
     <td className="flex justify-center ml-10 w-[65px] cursor-pointer relative">
@@ -51,8 +40,12 @@ export default function EditModal({ modalId }) {
           <img className="w-6 h-6 mr-1" src={Edit} alt="edit-icon" />
           Изменить
         </button>
-        <button className="flex items-center text-xs py-1" onClick={handleDelete}>
-          <img className="w-6 h-6 mr-1" src={Delete} alt="delete-icon" />
+        <button className="deleteBtn flex items-center text-xs py-1">
+          <img
+            className="deleteBtn w-6 h-6 mr-1"
+            src={Delete}
+            alt="delete-icon"
+          />
           Удалить
         </button>
       </div>

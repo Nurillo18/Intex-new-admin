@@ -1,18 +1,47 @@
 import React from "react";
 import EditModal from "../EditionModal/Modal";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
+import axios from "axios";
+import { useState } from "react";
 
 // ------> Css
 import "./TBody.css";
+import { useEffect } from "react";
 
-export default function TBody({ vitalData }) {
+const env = process.env.REACT_APP_ALL_API;
+
+export default function TBody({ vitalData, urlRoute }) {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    setData(vitalData);
+  }, [vitalData]);
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const handleDelete = (e, id) => {
+    if (e.target.matches(".deleteBtn")) {
+      axios.delete(`${env}${urlRoute}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setData([...data.filter((item) => item.mainId !== id)]);
+    }
+  };
+
+  const handleScroll = () => {
+    console.log("scrolling");
+  };
+
   return (
-    <tbody className="bg-white">
+    <tbody className="bg-white" onScroll={handleScroll}>
       <tr className="h-2.5 bg-[#E5E5E5]"></tr>
-      {vitalData.length > 0 &&
-        vitalData.map((el, i) => {
+      {data.length > 0 &&
+        data.map((el, i) => {
           return (
-            <tr key={i} className="flex items-center border-t last:border-b">
+            <tr
+              key={i}
+              className="flex items-center border-t last:border-b"
+              onClick={(e) => handleDelete(e, el.mainId)}
+            >
               <td className="w-11 flex justify-center">
                 <input
                   className="w-[18px] h-[18px] cursor-pointer"
@@ -20,7 +49,7 @@ export default function TBody({ vitalData }) {
                   name={`input${i}`}
                 />
               </td>
-              {el.map((a, i) => {
+              {el.data.map((a, i) => {
                 return (
                   <td
                     key={i}
@@ -29,10 +58,11 @@ export default function TBody({ vitalData }) {
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
-                        src="https://via.placeholder.com/42x38"
+                        src={a.image || "https://via.placeholder.com/42x38"}
                         alt="basseyn"
                       />
                     ) : null}
+
                     {typeof a.title === "object" && a.title != null ? (
                       a?.title?.map((el, i) =>
                         el.length ? (

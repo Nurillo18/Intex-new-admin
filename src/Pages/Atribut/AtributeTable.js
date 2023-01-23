@@ -93,11 +93,11 @@ const AtributeProducts = () => {
         }
       )
       .then((res) => {
-        res, IdArray;
+        console.log(res, IdArray);
         setRefresh(!refresh);
       })
       .catch((err) => {
-        err, IdArray;
+        console.log(err, IdArray);
       });
   };
   return (

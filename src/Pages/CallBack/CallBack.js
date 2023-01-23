@@ -68,7 +68,6 @@ export default function Home() {
         // setLoader(false);
       });
   }, [token]);
-  products;
 
   // ------> Table Row Information
   const vitalData = products.map((item) => {

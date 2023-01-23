@@ -78,7 +78,7 @@ export default function AddCategory() {
       }
       setInfo([arr]);
     } else {
-      (" Network Error! ");
+      // (" Network Error! ");
     }
 
     axios
@@ -89,7 +89,7 @@ export default function AddCategory() {
       })
       .then((res) => {
         if (res.status === 201) {
-          res;
+          console.log(res);
           navigate("/category");
         }
       })
@@ -100,10 +100,10 @@ export default function AddCategory() {
     setTags_ru(tags_ru.length === 0);
     setTags_en(tags_en.length === 0);
     setTags_uz(tags_uz.length === 0);
-    arr;
+    // arr;
   };
   useEffect(() => {
-    info;
+    // info;
   }, [info, setInfo]);
 
   return (

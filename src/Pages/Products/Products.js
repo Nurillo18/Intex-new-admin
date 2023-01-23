@@ -50,7 +50,7 @@ const Products = () => {
   const [isChecked, setIsChecked] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
   const [checkedCount, setCheckedCount] = React.useState(0);
-  const [limit, setLimit] = React.useState(5);
+  const [limit, setLimit] = React.useState(20);
   const [page, setPage] = React.useState(0);
   const [totalPage, setTotalpage] = React.useState(0);
   const [refresh, setRefresh] = React.useState(false);
@@ -118,52 +118,61 @@ const Products = () => {
         }
       )
       .then((res) => {
-        res, IdArray;
+        console.log(res, IdArray);
         setRefresh(!refresh);
       })
       .catch((err) => {
-        err, IdArray;
+        console.log(err, IdArray);
       });
   };
 
   const vitalData = data.map((item) => {
-    return [
-      {
-        title: item.id,
-        style: "w-14 flex justify-center",
-      },
-      {
-        title: item.about_en,
-        image: item.image[0],
-        style: "w-[300px] flex pl-3 items-center",
-      },
-      {
-        title: item.price,
-        style: "w-[140px]",
-      },
-      {
-        title: item.discount_price,
-        style: "w-[140px]",
-      },
-      {
-        title: item.count,
-        style: "w-[97px]",
-      },
-      {
-        title: item.category_en ? item.category_en : "Каркасные",
-        style: "w-[150px]",
-      },
-      {
-        title: item.status_en ? item.status_en : "new",
-        style: "w-[120px]",
-        label: `label label_${item.status_en}`,
-        statusStyle: "",
-      },
-    ];
+    return {
+      mainId: item.id,
+      data: [
+        {
+          title: item.id,
+          style: "w-14 flex justify-center",
+          id: item.id,
+        },
+        {
+          title: item.about_en,
+          image: item.image[0],
+          style: "w-[300px] flex pl-3 items-center",
+        },
+        {
+          title: item.price,
+          style: "w-[140px]",
+        },
+        {
+          title: item.discount_price,
+          style: "w-[140px]",
+        },
+        {
+          title: item.count,
+          style: "w-[97px]",
+        },
+        {
+          title: item.category_en ? item.category_en : "Каркасные",
+          style: "w-[150px]",
+        },
+        {
+          title: item.status_en ? item.status_en : "new",
+          style: "w-[120px]",
+          label: `label label_${item.status_en}`,
+          statusStyle: "",
+        },
+      ],
+    };
   });
+
+  const handleScroll = () => {
+    console.log("scrolling");
+  };
+
   return (
-    <div className="bg-white border-b rounded-xl mb-[100px]">
-      <div className="flex py-3 px-4 items-center">
+    <div className="bg-white ] rounded-xl mb-[100px]">
+      <div className="flex py-3 px-4 items-center  z-50">
         <input
           className="mr-3 w-4 h-4 cursor-pointer"
           type="checkbox"
@@ -180,13 +189,13 @@ const Products = () => {
           alt="Trash icon"
         />
       </div>
-      <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
-        <table className="w-full">
+      <div className="bg-white">
+        <table className="w-full" onScroll={handleScroll}>
           <THead data={datajon}></THead>
-          <TBody vitalData={vitalData}></TBody>
+          <TBody vitalData={vitalData} urlRoute="products"></TBody>
         </table>
       </div>
-      <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
+      {/* <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
         <div className="flex">
           <select
             className="rounded-md bg-[#f2f2f2] outline-none w-12 px-1 mr-3"
@@ -234,7 +243,7 @@ const Products = () => {
             </button>
           </span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

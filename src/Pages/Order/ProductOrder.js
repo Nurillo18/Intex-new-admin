@@ -81,7 +81,7 @@ export default function ProductOrder() {
         setRefresh(!refresh);
       })
       .catch((err) => {
-        err, IdArray;
+        console.log(err, IdArray);
       });
   };
   // ("with id", deleteAll);
@@ -90,7 +90,7 @@ export default function ProductOrder() {
 
   return (
     <>
-      <div className="bg-white border-b rounded-xl mb-[100px] z-30">
+      <div className="bg-white border-b rounded-xl mb-[100px] ">
         <div className="flex py-3 px-4 items-center">
           <input
             className="mr-3 w-4 h-4 cursor-pointer"
@@ -108,7 +108,7 @@ export default function ProductOrder() {
           />
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
-          <table className="w-full">
+          <table className="w-full pt-12">
             <thead className="bg-[#f2f2f2]">
               <TableRow2 styles="py-[13px]">
                 <TableHeader styles="w-11 pr-3 justify-center">
