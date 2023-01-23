@@ -14,6 +14,7 @@ import UserPage from "./Pages/UserPage/UserPage";
 import NotFound from "./Pages/NotFound/NotFound";
 import "./Assets/main.css";
 import UserDetails from "./Pages/UserDetails/UserDetails";
+import { UpdateOrder } from "./Pages/Order/UpdateOrder";
 
 export default function Authentication() {
   return (
@@ -27,6 +28,7 @@ export default function Authentication() {
             <Route path="/category" element={<Catergory />} />
             <Route path="/atribut" element={<Atribut />} />
             <Route path="/order" element={<Order />} />
+            <Route path="/order/update" element={<UpdateOrder />} />
             <Route path="/callBack" element={<CallBack />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/addProduct" element={<AddProduct />} />

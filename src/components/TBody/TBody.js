@@ -10,8 +10,9 @@ import { useEffect } from "react";
 
 const env = process.env.REACT_APP_ALL_API;
 
-export default function TBody({ vitalData, urlRoute }) {
+export default function TBody({ vitalData, urlRoute, linkUp }) {
   const [data, setData] = useState([]);
+  console.log(vitalData);
   useEffect(() => {
     setData(vitalData);
   }, [vitalData]);
@@ -51,7 +52,10 @@ export default function TBody({ vitalData, urlRoute }) {
               </td>
               {el.data.map((a, i) => {
                 return (
-                  <td key={i} className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}>
+                  <td
+                    key={i}
+                    className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}
+                  >
                     {a.image ? (
                       <img
                         className="w-6 h-6 rounded-full mr-[6px]"
@@ -62,7 +66,13 @@ export default function TBody({ vitalData, urlRoute }) {
 
                     {typeof a.title === "object" && a.title != null ? (
                       a?.title?.map((el, i) =>
-                        el.length ? <MFilter key={i}>{el}</MFilter> : <span key={i}></span>)) : (
+                        el.length ? (
+                          <MFilter key={i}>{el}</MFilter>
+                        ) : (
+                          <span key={i}></span>
+                        )
+                      )
+                    ) : (
                       <span
                         className={`${a.textClass} ${
                           a?.label ? a?.label : "text-[#24283A] text-sm"
@@ -74,7 +84,7 @@ export default function TBody({ vitalData, urlRoute }) {
                   </td>
                 );
               })}
-              <EditModal modalId={i}></EditModal>
+              <EditModal modalId={i} linkUp={linkUp}></EditModal>
             </tr>
           );
         })}
