@@ -109,72 +109,8 @@ export default function ProductOrder() {
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full pt-12">
-            <thead className="bg-[#f2f2f2]">
-              <TableRow2 styles="py-[13px]">
-                <TableHeader styles="w-11 pr-3 justify-center">
-                  <input
-                    className="w-4 h-4"
-                    type="checkbox"
-                    readOnly
-                    checked={false}
-                  />
-                </TableHeader>
-                <TableHeader styles="w-[80px]" sortIcon={true}>
-                  ID
-                </TableHeader>
-                <TableHeader styles="w-[148px]" sortIcon={true}>
-                  Номер заказа
-                </TableHeader>
-                <TableHeader styles="w-[148px]" sortIcon={true}>
-                  Имя клиента
-                </TableHeader>
-                <TableHeader styles="w-[178px]" sortIcon={true}>
-                  Номер телефона
-                </TableHeader>
-                <TableHeader styles="w-[254px]">Адрес</TableHeader>
-                <TableHeader styles="w-[178px]">Кол-во продуктов</TableHeader>
-                <TableHeader styles="w-[153px]">Обшая цена</TableHeader>
-                <TableHeader styles="w-[153px]">Цена со скидкой</TableHeader>
-                <TableHeader styles="w-[145px]">Время заказа</TableHeader>
-                <TableHeader styles="w-[145px]">Статус</TableHeader>
-                <TableHeader styles="w-[95px] pr-3 justify-center">
-                  <button>
-                    <img src={ThreeDotsSvg} alt="three dots icon" />
-                  </button>
-                </TableHeader>
-              </TableRow2>
-            </thead>
-            <tbody className="bg-white">
-              {data.length && search.length
-                ? searchProduct(search, data).map((item) => {
-                    return (
-                      <TableRow2
-                        styles="py-1.5"
-                        data={item}
-                        refresh={() => setRefresh(!refresh)}
-                        key={item.id}
-                        isChecked={isChecked}
-                        setDeleteAll={setDeleteAll}
-                        deleteAll={deleteAll}
-                        handleChanges={handleChange}
-                      ></TableRow2>
-                    );
-                  })
-                : data.map((item) => {
-                    return (
-                      <TableRow2
-                        styles="py-1.5"
-                        data={item}
-                        refresh={() => setRefresh(!refresh)}
-                        key={item.id}
-                        isChecked={isChecked}
-                        setDeleteAll={setDeleteAll}
-                        deleteAll={deleteAll}
-                        handleChanges={handleChange}
-                      ></TableRow2>
-                    );
-                  })}
-            </tbody>
+            <THead />
+            <TBody />
           </table>
         </div>
         <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
