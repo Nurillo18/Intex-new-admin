@@ -87,6 +87,95 @@ export default function ProductOrder() {
   // ("with id", deleteAll);
 
   // (deleteAll.length);
+  const datas = [
+    {
+      title: "№ Заказа",
+      image: true,
+      style: "w-[120px] justify-center",
+    },
+    {
+      title: "Имя клиента",
+      image: true,
+      style: "w-[132px] ",
+    },
+    {
+      title: "Tелефон",
+      image: false,
+      style: "w-[162px]",
+    },
+    {
+      title: "Адрес",
+      image: false,
+      style: "w-[200px]",
+    },
+    {
+      title: "Товары",
+      image: true,
+      style: "w-[110px]",
+    },
+    {
+      title: "Обшая цена",
+      image: true,
+      style: "w-[132px]",
+    },
+    {
+      title: "Время заказа",
+      image: false,
+      style: "w-[114px]",
+    },
+    {
+      title: "Статус",
+      image: false,
+      style: "w-[118px]",
+    },
+  ];
+  const vitalData = data.map((item) => {
+    // console.log(item.ids);
+    return {
+      mainId: item.id,
+      data: [
+        {
+          title: item.order_number,
+          style: "w-[120px] ",
+          id: item.order_number,
+          user_id: item?.user_id,
+        },
+        {
+          title: item.first_name,
+          style: "w-[132px]",
+        },
+        {
+          title: item.phone,
+          style: "w-[162px]",
+        },
+        {
+          title: item.address,
+          style: "w-[200px] underline underline-offset-4 text-blue-400",
+        },
+        {
+          title: item.total_count,
+          style: "w-[110px] pl-3",
+        },
+        {
+          title: `${item.total_price} сум`,
+          style: "w-[132px]",
+        },
+        {
+          title: `${item.created_at.slice(0, 10)}  ${item.created_at.slice(
+            11,
+            16
+          )}`,
+          style: "w-[114px]",
+        },
+        {
+          title: item.name_ru ? item.name_ru : "нот статус",
+          style: "w-[118px] flex justify-center",
+          label: `label label_${item.name_en}`,
+          statusStyle: "",
+        },
+      ],
+    };
+  });
 
   return (
     <>
@@ -109,8 +198,8 @@ export default function ProductOrder() {
         </div>
         <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
           <table className="w-full pt-12">
-            <THead />
-            <TBody />
+            <THead data={datas} />
+            <TBody vitalData={vitalData} />
           </table>
         </div>
         <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
