@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DropDown from "../../BaseComponents/DropDown/DropDown";
 import DropImg from "../../Assets/Images/HomeContentImg/Drop.svg";
 import FormikControl from "../../BaseComponents/FormInput/FormikControl";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik, Form, setIn } from "formik";
 import {
@@ -224,12 +224,14 @@ export default function AddCategory() {
                 </div>
               </DropDown>
               <div className="flex mt-6 pb-8 items-center justify-center space-x-5">
-                <button
-                  className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"
-                  type="reset"
-                >
-                  Отменить
-                </button>
+                <Link to="/category">
+                  <button
+                    className="py-3 bg-resetBtn rounded-2xl w-submitBtnsWidth text-russuanColor font-bold text-lg"
+                    type="reset"
+                  >
+                    Отменить
+                  </button>
+                </Link>
                 <button
                   className="py-3 text-white rounded-2xl w-submitBtnsWidth bg-submitBtnBg font-bold text-lg"
                   type="submit"

@@ -123,28 +123,32 @@ const ProductsCategory = () => {
   ];
 
   const vitalData = data.map((item) => {
-    return [
-      {
-        title: item.id,
-        style: "w-20 ",
-      },
-      {
-        title: item.category_ru,
-        style: "w-[227px] flex pl-3 items-center",
-      },
-      {
-        title: item.ru[0] == null ? "0" : item.ru.length,
-        style: "w-[197px]",
-      },
-      {
-        title: item.ru[0] === null ? "" : item.ru,
-        style: "w-[474px]",
-      },
-    ];
-  });
+    return {
+      mainId: "ali",
 
+      data: [
+        {
+          title: item.id,
+          style: "w-20 ",
+        },
+        {
+          title: item.category_ru,
+          style: "w-[227px] flex pl-3 items-center",
+        },
+        {
+          title: item.ru[0] == null ? "0" : item.ru.length,
+          style: "w-[197px]",
+        },
+        {
+          title: item.ru[0] === null ? "alisher" : item.ru,
+          style: "w-[474px]",
+        },
+      ],
+    };
+  });
+  console.log(data);
   return (
-    <div className="bg-white border-b rounded-xl mb-[100px]">
+    <div className="bg-white border-b rounded-xl mb-[200px]">
       <div className="flex py-3 px-4 items-center">
         <input
           className="mr-3 w-4 h-4 cursor-pointer"
@@ -163,12 +167,9 @@ const ProductsCategory = () => {
       </div>
       <div className="table-scroll overflow-x-scroll pb-2.5 bg-white">
         <table className="w-full">
-          <thead className="bg-[#f2f2f2]">
-            <THead data={datas} />
-          </thead>
-          <tbody className="bg-white">
-            <TBody vitalData={vitalData} />
-          </tbody>
+          <THead data={datas} />
+
+          <TBody vitalData={vitalData} />
         </table>
       </div>
       <div className="flex border-t mt-2.5 p-3 justify-between items-center pr-5">
