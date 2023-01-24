@@ -71,9 +71,7 @@ const Products = () => {
   React.useEffect(() => {
     setLoader(true);
     axios
-      .get(
-        `https://intex-shop-production.up.railway.app/api/products?page=${page}&limit=${limit}`
-      )
+      .get(`https://intex-shop-production.up.railway.app/api/products?page=${page}&limit=${limit}`)
       .then((res) => {
         setData(res?.data?.result);
         // (res?.data?.result);
@@ -171,7 +169,7 @@ const Products = () => {
   };
 
   return (
-    <div className="bg-white ] rounded-xl mb-[100px]">
+    <div className="bg-white rounded-xl mb-[100px]">
       <div className="flex py-3 px-4 items-center  z-50">
         <input
           className="mr-3 w-4 h-4 cursor-pointer"
@@ -179,15 +177,9 @@ const Products = () => {
           onChange={() => setIsChecked(!isChecked)}
         />
         <span className="text-[#b9b9b9] mr-3">
-          {isChecked ? data.result.length : deleteAll.length},{" "}
-          {languages[lang].main.select}
+          {isChecked ? data.result.length : deleteAll.length}, {languages[lang].main.select}
         </span>
-        <img
-          className="cursor-pointer"
-          onClick={DeleteAll}
-          src={Trash}
-          alt="Trash icon"
-        />
+        <img className="cursor-pointer" onClick={DeleteAll} src={Trash} alt="Trash icon" />
       </div>
       <div className="bg-white">
         <table className="w-full" onScroll={handleScroll}>

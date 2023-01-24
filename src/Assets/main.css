@@ -69,7 +69,7 @@ body{
 
 /* --- Scrol Styles --- */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 
 /* Track */
@@ -79,7 +79,7 @@ body{
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #FF7D44; 
+  background: #109ef4; 
 }
 
 /* Handle on hover */

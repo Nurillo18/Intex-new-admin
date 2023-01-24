@@ -49,7 +49,7 @@ export default function TBody({ vitalData, urlRoute }) {
                   name={`input${i}`}
                 />
               </td>
-              {el.data.map((a, i) => {
+              {el?.data.map((a, i) => {
                 return (
                   <td key={i} className={`flex items-center py-3 pl-3 cursor-pointer ${a.style}`}>
                     {a.image ? (

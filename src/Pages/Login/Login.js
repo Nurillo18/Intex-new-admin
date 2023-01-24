@@ -25,7 +25,7 @@ function Login() {
     setLoading(true);
     axios
       .post(`${env}auth/admin/login`, {
-        phone: email,
+        phone: null,
         email: email,
         password: password,
       })

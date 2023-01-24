@@ -1,6 +1,5 @@
-import { React, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import HomeImg from "../../Assets/Images/HeaderImgs/HomeImg.svg";
 import MButton from "../../BaseComponents/MButton/MButton";
@@ -68,15 +67,17 @@ function UserPage() {
   const [password1, setPassword1] = useState("");
   // ------> Data
   const [products, setProducts] = useState([]);
-  // const [admins, setAdmins] = useAdmins();
 
   // ------> User Informations States
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("");
   const [surName, setSurName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [birthday, setBirthday] = useState("");
+
   const token = JSON.parse(window.localStorage.getItem("token"));
 
   // ------> Get Users
@@ -162,11 +163,11 @@ function UserPage() {
     last_name: surName,
     password: password === password1 ? password : "",
     phone: "+998" + phoneNumber,
-    email: null,
+    email: email,
     birth_date: birthday,
     user_image: image ? image[0] : "",
     status: status,
-    gender: null,
+    gender: gender,
     role: role,
     is_active: true,
   };
@@ -217,7 +218,7 @@ function UserPage() {
           <h2 className="font-normal text-navSubColor text-xs ml-2.5">Пользователи</h2>
         </Link>
       </div>
-      <div className="pt-6 px-homeContentPadding ">
+      <div className="pt-6 px-homeContentPadding">
         <div className="mb-4">
           <h2 className="text-navBarColor font-bold leading-8 text-2xl mb-4">Пользователи</h2>
           <div className="bg-white py-3 px-4 rounded-xl flex items-center justify-between">
@@ -260,7 +261,7 @@ function UserPage() {
           </div>
         </div>
       </div>
-      <div className="bg-white ] rounded-xl mb-[100px] mx-8">
+      <div className="bg-white rounded-xl mx-8">
         <div className="flex py-3 px-3 items-center z-50">
           <input className="mr-3 w-[18px] h-[18px] cursor-pointer" type="checkbox" />
           <span className="text-[#b9b9b9] mr-3">0, Выбрано</span>
@@ -271,6 +272,7 @@ function UserPage() {
           <TBody vitalData={vitalData} urlRoute="users"></TBody>
         </table>
       </div>
+
       {/* ---------------- Modal ------------------- */}
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
         <div className="w-[730px] bg-white">
@@ -336,7 +338,6 @@ function UserPage() {
                   className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-4"
                 />
               </label>
-
               <label className="flex flex-col font-medium text-base text-addProductColor">
                 Фамилия
                 <input
@@ -348,7 +349,6 @@ function UserPage() {
                   className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-4"
                 />
               </label>
-
               <label className="relative text-base font-medium text-addProductColor">
                 Номер телефона
                 <div className="w-full bg-white flex items-center h-11 rounded-lg border border-solid text-addProductColor px-4 mt-2">
@@ -363,7 +363,6 @@ function UserPage() {
                   />
                 </div>
               </label>
-
               <label className="text-15 relative flex flex-col text-addProductColor" htmlFor="date">
                 Дата рождение
                 <input
@@ -375,7 +374,30 @@ function UserPage() {
                   className={`date_bg date h-11 relative text-15 rounded-md pr-10 pl-3 mt-2 outline-none border text-black`}
                 />
               </label>
-              {/* ------ Select ------ */}
+              <label className="flex flex-col font-medium text-base text-addProductColor">
+                Email
+                <input
+                  required
+                  type="text"
+                  name="email"
+                  placeholder="Введите ваша email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="font-normal border border-[#E3E5E5] rounded-lg outline-none mt-2 h-11 px-4"
+                />
+              </label>
+              {/* ------ Select ------ */}{" "}
+              <select
+                placeholder="Gender"
+                onChange={(e) => setGender(e.target.value)}
+                className="h-11 relative text-base rounded-md pr-10 px-3 mt-8 outline-none border text-black"
+                required
+              >
+                <option value="Статус" hidden>
+                  Gender
+                </option>
+                <option value="male">Male</option>
+                <option value="female">Memale</option>
+              </select>
               <select
                 placeholder="Статус"
                 onChange={(e) => setStatus(e.target.value)}

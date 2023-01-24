@@ -5,16 +5,27 @@ import usaFlag from "../../Assets/Images/HeaderImgs/usa-flag.svg";
 import uzbFlag from "../../Assets/Images/HeaderImgs/uzb-flag.svg";
 import Notification from "../../Assets/Images/HeaderImgs/notification.svg";
 import avatar from "../../Assets/Images/HeaderImgs/avatar.svg";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeLang } from "../../redux/siteDataReducer";
+import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
+
+const envImg = process.env.REACT_APP_IMAGE;
 
 export default function Header() {
   const [down, setDown] = useState(false);
   const [flagImg, setFlagImg] = useState(ruFlag);
   const [langName, setLangName] = useState("Ру");
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  const [userImg, setUserImg] = useState({});
+  console.log(userImg);
 
-  const lang = useSelector((state) => state.data.lang);
   const dispatch = useDispatch();
+
+  console.log(token);
+  // useEffect(() => {
+  //   console.log(jwtDecode(token));
+  // }, [token]);
 
   const chooseName = (evt) => {
     if (evt.target.textContent === "Uz") {
@@ -57,9 +68,7 @@ export default function Header() {
           <img src={flagImg} alt="ru" width="28" height="20" />
           <span className="ml-2.5">{langName}</span>
           <img
-            className={`${
-              down ? "-rotate-180" : "-rotate-0"
-            } duration-200 ml-2.5`}
+            className={`${down ? "-rotate-180" : "-rotate-0"} duration-200 ml-2.5`}
             src={DropIcon}
             alt="Drop img"
             width="12"
@@ -67,15 +76,10 @@ export default function Header() {
           />
           <ul
             className={`bg-defaultBtnBg w-full z-10 absolute left-0 translate-y-bottom duration-300 rounded-lg ${
-              down
-                ? "translate-y-[77px] h-auto opacity-1"
-                : "opacity-0 overflow-hidden h-0"
+              down ? "translate-y-[77px] h-auto opacity-1" : "opacity-0 overflow-hidden h-0"
             } `}
           >
-            <li
-              onClick={chooseName}
-              className="flex items-center pt-3 pl-3 pb-1.5"
-            >
+            <li onClick={chooseName} className="flex items-center pt-3 pl-3 pb-1.5">
               <img
                 onClick={chooseImg}
                 className="mr-2.5"
@@ -86,10 +90,7 @@ export default function Header() {
               />
               Uz
             </li>
-            <li
-              onClick={chooseName}
-              className="flex items-center pt-1.5 pl-3 pb-1.5"
-            >
+            <li onClick={chooseName} className="flex items-center pt-1.5 pl-3 pb-1.5">
               <img
                 onClick={chooseImg}
                 className="mr-2.5"
@@ -100,10 +101,7 @@ export default function Header() {
               />
               Us
             </li>
-            <li
-              onClick={chooseName}
-              className="flex  items-center pl-3 pt-1.5 pb-3"
-            >
+            <li onClick={chooseName} className="flex  items-center pl-3 pt-1.5 pb-3">
               <img
                 onClick={chooseImg}
                 className="mr-2.5"
@@ -118,15 +116,14 @@ export default function Header() {
         </div>
 
         <div className="flex cursor-pointer items-center justify-center w-10 h-10 rounded-headerNotif bg-defaultBtnBg">
-          <img
-            src={Notification}
-            alt="notification img"
-            width="24"
-            height="24"
-          />
+          <img src={Notification} alt="notification img" width="24" height="24" />
         </div>
-        <div className="flex cursor-pointer items-center justify-center w-10 h-10 rounded-headerNotif bg-defaultBtnBg">
-          <img src={avatar} alt="notification img" width="17" height="19" />
+        <div className="flex cursor-pointer items-center justify-center w-10 h-10 bg-defaultBtnBg rounded-full">
+          {/* <img
+            className="rounded-full"
+            src={`${userImg?.image ? envImg + userImg.image : avatar}`}
+            alt="img"
+          /> */}
         </div>
       </div>
     </div>

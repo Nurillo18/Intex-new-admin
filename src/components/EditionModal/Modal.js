@@ -34,18 +34,14 @@ export default function EditModal({ modalId }) {
         id="oram"
         className={`${
           isModalOpened ? "grid" : "hidden"
-        } absolute -top-[5px] right-[65px] border w-[126px] !bg-white z-5 rounded-[5px] py-1 px-3`}
+        } absolute -top-[1px] right-[65px] border w-[126px] !bg-white z-5 rounded-[5px] py-1 px-3`}
       >
         <button className="flex items-center text-xs py-1">
           <img className="w-6 h-6 mr-1" src={Edit} alt="edit-icon" />
           Изменить
         </button>
         <button className="deleteBtn flex items-center text-xs py-1">
-          <img
-            className="deleteBtn w-6 h-6 mr-1"
-            src={Delete}
-            alt="delete-icon"
-          />
+          <img className="deleteBtn w-6 h-6 mr-1" src={Delete} alt="delete-icon" />
           Удалить
         </button>
       </div>
