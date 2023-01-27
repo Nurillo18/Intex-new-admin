@@ -58,9 +58,17 @@ function Login() {
         <div className="max-w-login_content w-full">
           <div className="flex flex-col text-center bg-white p-11 rounded-xl">
             <Toaster position="top-center" reverseOrder={false} />
-            <h1 className="font-bold text-3xl text-supportColor">INTEX-MARKET</h1>
-            <p className="font-bold text-2xl text-navBarColor mt-4 mb-5">Авторизоваться</p>
-            <form className="flex flex-col text-center" onSubmit={postRequest} autoComplete="off">
+            <h1 className="font-bold text-3xl text-supportColor">
+              INTEX-MARKET
+            </h1>
+            <p className="font-bold text-2xl text-navBarColor mt-4 mb-5">
+              Авторизоваться
+            </p>
+            <form
+              className="flex flex-col text-center"
+              onSubmit={postRequest}
+              autoComplete="off"
+            >
               <div className="relative mb-5">
                 <input
                   value={email}
@@ -80,7 +88,7 @@ function Login() {
                 </label>
               </div>
               <div>
-                <div className="relative mb-5">
+                <div className="relative  mb-5">
                   <input
                     value={password}
                     type={icon ? "text" : "password"}
@@ -119,7 +127,10 @@ function Login() {
               </div>
               <div className="flex justify-between mt-">
                 <label className="flex items-center font-medium text-sm text-navBarColor cursor-pointer">
-                  <input className="w-4 h-4 mr-2 cursor-pointer" type="checkbox" />
+                  <input
+                    className="w-4 h-4 mr-2 cursor-pointer"
+                    type="checkbox"
+                  />
                   Запомнить меня
                 </label>
                 <Link
@@ -132,7 +143,13 @@ function Login() {
               <div className="mt-5">
                 <SubmitBtn>
                   {loading ? (
-                    <img className="mx-auto" src={Loader} alt="loader" width={28} height={28} />
+                    <img
+                      className="mx-auto"
+                      src={Loader}
+                      alt="loader"
+                      width={28}
+                      height={28}
+                    />
                   ) : (
                     "Войти"
                   )}
