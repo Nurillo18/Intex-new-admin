@@ -4,12 +4,13 @@ import Delete from "../../Assets/Images/TableImgs/trash.svg";
 import Dots from "../../Assets/Images/TableImgs/dots.svg";
 import { Link } from "react-router-dom";
 
-export default function EditModal({ modalId, linkUp }) {
+export default function EditModal({ modalId, linkUp, handleSaved }) {
   const [isModalOpened, setisModalOpened] = React.useState(false);
 
   // ------> Show Modal
   const handleModal = () => {
     setisModalOpened(true);
+    handleSaved();
   };
 
   // ------> Window Listener
@@ -23,7 +24,7 @@ export default function EditModal({ modalId, linkUp }) {
   // ------> Delete Row
 
   return (
-    <td className="flex justify-center ml-10 w-[65px] cursor-pointer relative">
+    <td className="flex justify-center ml-5 w-[65px] cursor-pointer relative">
       <img
         className="py-4 px-7"
         src={Dots}
@@ -37,12 +38,15 @@ export default function EditModal({ modalId, linkUp }) {
           isModalOpened ? "grid" : "hidden"
         } absolute -top-[5px] right-[65px] border w-[126px] !bg-white z-5 rounded-[5px] py-1 px-3`}
       >
-        <Link to={linkUp}>
-          <button className="flex items-center text-xs py-1">
-            <img className="w-6 h-6 mr-1" src={Edit} alt="edit-icon" />
-            Изменить
-          </button>
-        </Link>
+        {linkUp ? (
+          <Link to={linkUp}>
+            <button className="flex items-center text-xs py-1">
+              <img className="w-6 h-6 mr-1" src={Edit} alt="edit-icon" />
+              Изменить
+            </button>
+          </Link>
+        ) : null}
+
         <button className="deleteBtn flex items-center text-xs py-1">
           <img
             className="deleteBtn w-6 h-6 mr-1"
