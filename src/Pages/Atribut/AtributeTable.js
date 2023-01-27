@@ -61,7 +61,7 @@ const AtributeProducts = () => {
   // --- Loader
   const loaders = (
     <svg
-      ariaHidden="true"
+      aria-hidden="true"
       className="mr-2 w-14 h-1w-14 text-gray-200 animate-spin dark:text-gray-200 fill-blue-600"
       viewBox="0 0 100 101"
       fill="none"

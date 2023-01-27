@@ -6,6 +6,8 @@ const siteProducts = createSlice({
     localization: languages,
     lang: "ru",
     search: "",
+    userId: 0,
+    orderNum: "",
   },
   reducers: {
     changeLang: (state, action) => {
@@ -15,9 +17,16 @@ const siteProducts = createSlice({
     searchProduction: (state, action) => {
       state.search = action.payload;
     },
+    changeUserID: (state, action) => {
+      state.userId = action.payload;
+    },
+    changeOrderNum: (state, action) => {
+      state.orderNum = action.payload;
+    },
   },
 });
 
-export const { changeLang, searchProduction } = siteProducts.actions;
+export const { changeLang, searchProduction, changeUserID, changeOrderNum } =
+  siteProducts.actions;
 
 export default siteProducts.reducer;

@@ -3,29 +3,40 @@ import EditModal from "../EditionModal/Modal";
 import MFilter from "../../BaseComponents/MFilter/MFilter";
 import axios from "axios";
 import { useState } from "react";
+import { changeUserID, changeOrderNum } from "../../redux/siteDataReducer";
 
 // ------> Css
 import "./TBody.css";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const env = process.env.REACT_APP_ALL_API;
 
 export default function TBody({ vitalData, urlRoute, linkUp }) {
   const [data, setData] = useState([]);
+  const [userId, setUserId] = useState(0);
+  const [orderNum, setOrderNum] = useState("");
   console.log(vitalData);
+  const dispatch = useDispatch();
   useEffect(() => {
     setData(vitalData);
   }, [vitalData]);
+  const handleSaved = () => {
+    setUserId(vitalData.user_id);
+    setOrderNum(vitalData.order_num);
+  };
   const token = JSON.parse(window.localStorage.getItem("token"));
   const handleDelete = (e, id) => {
     if (e.target.matches(".deleteBtn")) {
-      axios.delete(`${env}${urlRoute}/${id}`, {
+      axios.delete(`${env}${urlRoute}/${id.mainId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setData([...data.filter((item) => item.mainId !== id)]);
+      setData([...data.filter((item) => item.mainId !== id.mainId)]);
     }
+    dispatch(changeUserID(id?.user_id));
+    dispatch(changeOrderNum(id?.order_num));
   };
 
   const handleScroll = () => {
@@ -41,7 +52,7 @@ export default function TBody({ vitalData, urlRoute, linkUp }) {
             <tr
               key={i}
               className="flex items-center border-t last:border-b"
-              onClick={(e) => handleDelete(e, el.mainId)}
+              onClick={(e) => handleDelete(e, el)}
             >
               <td className="w-11 flex justify-center">
                 <input
@@ -84,7 +95,11 @@ export default function TBody({ vitalData, urlRoute, linkUp }) {
                   </td>
                 );
               })}
-              <EditModal modalId={i} linkUp={linkUp}></EditModal>
+              <EditModal
+                modalId={i}
+                linkUp={linkUp}
+                handleSaved={handleSaved}
+              ></EditModal>
             </tr>
           );
         })}

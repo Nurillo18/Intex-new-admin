@@ -130,9 +130,11 @@ export default function ProductOrder() {
     },
   ];
   const vitalData = data.map((item) => {
-    // console.log(item.ids);
+    // console.log(item.created_at[0].slice(0, 10));
     return {
-      mainId: item.id,
+      mainId: item.ids,
+      order_num: item.order_number,
+      user_id: item?.user_id,
       data: [
         {
           title: item.order_number,
@@ -161,10 +163,7 @@ export default function ProductOrder() {
           style: "w-[132px]",
         },
         {
-          title: `${item.created_at.slice(0, 10)}  ${item.created_at.slice(
-            11,
-            16
-          )}`,
+          title: `${item.created_at[0].slice(0, 10)}`,
           style: "w-[114px]",
         },
         {
@@ -176,7 +175,7 @@ export default function ProductOrder() {
       ],
     };
   });
-
+  console.log(data);
   return (
     <>
       <div className="bg-white border-b rounded-xl mb-[100px] ">

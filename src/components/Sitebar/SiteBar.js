@@ -195,7 +195,7 @@ export default function SiteBar() {
                 className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
               >
                 <svg
-                  ariaHidden="true"
+                  aria-hidden="true"
                   className="w-5 h-5"
                   fill="currentColor"
                   viewBox="0 0 20 20"
@@ -211,7 +211,7 @@ export default function SiteBar() {
               </button>
               <div className="p-6 text-center">
                 <svg
-                  ariaHidden="true"
+                  aria-hidden="true"
                   className="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
                   fill="none"
                   stroke="currentColor"

@@ -11,22 +11,22 @@ import { useState } from "react";
 // import { useState } from "react";
 // import Calendar from "../../Assets/Images/NavbarImgs/date.svg";
 export const UpdateOrder = () => {
-  const orderNumber = useSelector((state) => state.data.orderId);
+  const orderNumber = useSelector((state) => state.data.orderNum);
   const userId = useSelector((state) => state.data.userId);
   const token = JSON.parse(window.localStorage.getItem("token"));
   const [data, setData] = useState([]);
   const [updateOrder, setUpdateOrder] = useState({});
   const [status, setStatus] = useState(data[0]?.order_status_ru);
-  const UserID = JSON.parse(window.localStorage.getItem("UserId"));
-  const OrderNum = JSON.parse(window.localStorage.getItem("OrderNumber"));
-  console.log(OrderNum);
-  console.log(UserID);
+  // const UserID = JSON.parse(window.localStorage.getItem("UserId"));
+  // const OrderNum = JSON.parse(window.localStorage.getItem("OrderNumber"));
+  console.log(orderNumber);
+  console.log(userId);
 
   //intex-shop-production.up.railway.app/api/orders/50?order_number=%23100053
   React.useEffect(() => {
     axios
       .get(
-        `  https://intex-shop-production.up.railway.app/api/orders/${UserID}?order_number=%23${OrderNum.slice(
+        `  https://intex-shop-production.up.railway.app/api/orders/${userId}?order_number=%23${orderNumber.slice(
           1
         )}`,
         {
@@ -96,7 +96,7 @@ export const UpdateOrder = () => {
         <span className="ml-2.5 text-navSubColor ">/</span>
         <Link to="/order">
           <h2 className="font-normal text-navSubColor text-xs ml-2.5">
-            {OrderNum}
+            {orderNumber}
           </h2>
         </Link>
         <span className="ml-2.5 text-navSubColor ">/</span>
